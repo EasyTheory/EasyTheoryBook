@@ -1,28 +1,30 @@
-\documentclass[]{article}
-
-\usepackage{fullpage}
+\documentclass[a4paper,american,12pt]{book}
+\usepackage[utf8]{inputenc}% Unicode rules
+\usepackage[T1]{fontenc} % ALWAYS use even in english, see : https://tex.stackexchange.com/questions/664/why-should-i-use-usepackaget1fontenc
+\usepackage{microtype} % typographic enhancements
+\usepackage{babel} % Language related adjustments
 \usepackage{xcolor}
-\usepackage{amsmath}
+\usepackage{mathtools} % better than amsmath 
+\usepackage{amssymb} % but requires to load amssymb
 \usepackage{tikz}
 \usetikzlibrary{automata,positioning,arrows.meta}
-
-\usepackage{enumitem}
-\usepackage{cleveref}
+\usepackage{enumitem} %list made easier
+\usepackage{mdframed} % frames and stuff
+\usepackage{hyperref} %I want my links in PDF 
+\usepackage{cleveref} % Eception to the rule : ALWAYS load AFTER HYPERREF
+\usepackage[hmarginratio=1:1]{geometry} % margins with a4, hmargin ratio ensure book page numbers don't mess with margins
 \crefname{enumi}{problem}{problems}
-
-% Level
+\renewcommand{\thesection}{\arabic{section}} % Remove the chapter from book sections
+\setlist[enumerate]{leftmargin=!,font={\bfseries}}% global settings, for all lists, removes the margin indent for items, and puts them bold for fun
+\setlist[itemize]{leftmargin=!}% Only the margins here
 \newcommand{\Level}[1]{{\color{blue} $\langle$#1$\rangle$}}
-
 \title{Sample Problems}
 \author{Easy Theory}
 \date{Last Updated: \today}
-
 \begin{document}
-
 \maketitle
-
+\frontmatter  % comes before main text
 \section*{How to Use these Problems}
-
 This is a core dump of problems to practice in theory of computation.
 This should give you a good idea of the types of questions that we will ask on an exam.
 This list intentionally includes a few questions that are too long or difficult for exam conditions.
@@ -36,27 +38,32 @@ The list of questions is divided up into 5 difficulties: \Level{1} through \Leve
 \end{itemize}
 
 Try to not solve every single one of these problems. 
-Instead, try to pick a \textit{sample} set of problems that you think would be most beneficial.
+Instead, try to pick a \emph{sample} set of problems that you think would be most beneficial.
 For instance, it would be a terrible idea to only work on \Level{1} problems, or only on \Level{5} problems. 
 
-Discussing solutions to these problems is very beneficial, but \textit{only if} you have made an honest attempt at solving them yourself.
+Discussing solutions to these problems is very beneficial, but \emph{only if} you have made an honest attempt at solving them yourself.
 If you're getting stuck on a particular problem, try to understand \textbf{why} you are getting stuck on those problems, and try to remedy where the approaches are not clear.
 If you're missing points consistently on coursework, try to come back to these problems to see why you are missing them.
-
-\framebox[\textwidth]{Don't aim for ``understanding'' or ``regurgitating'' the solutions; instead aim for \textbf{\textit{mastery}}.}
-
-\pagebreak
-
+%\framebox[\linewidth][c]{Don't aim for ``understanding'' or ``regurgitating'' the solutions; instead aim for \textbf{\emph{mastery}}.}\par
+\vspace*{\fill} %Sandwich : as much vspace as possible
+\sloppy
+\begin{center} % Center the box
+  \fbox{% creates the frame
+  \parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}% An \fbox has the width of its contents plus 2 \fboxsep plus 2 \fboxrule
+  {\centering \Large{Don't aim for ``understanding'' or ``regurgitating'' the solutions; instead aim for \textbf{\emph{mastery}}.}}}
+ %Creates the text, centered with centering
+\end{center}
+\vspace*{\fill}%Sandwich : as much vspace as possible
+\clearpage % better than newpage
 \tableofcontents
-
-\pagebreak
-
-\begin{enumerate}
-
+\clearpage
+\mainmatter % normal page numbering
+\markboth{\MakeUppercase{problems}}{\MakeUppercase{problems}} % Right header of page 
+\addcontentsline{toc}{chapter}{Problems}
 \section{DFAs}
-
-\item Produce a state diagram of a DFA for the following languages:
 \begin{enumerate}
+\item Produce a state diagram of a DFA for the following languages:
+\begin{enumerate} 
 
 \item \Level{1} All strings except $\varepsilon$.
 
@@ -100,7 +107,7 @@ Explain why, in general, $Square(L) \ne Double(L)$.
 However, all three are having trouble coordinating since they have each designed their DFAs differently, but also that their DFAs do not have the same language.
 Since the election is coming soon, we cannot possibly target all voters in the languages in at least one of the DFAs.
 And we cannot target just the voters that are in common with the three DFAs, because we project I won't win the election then.
-We decide to target the voters that are in a \textit{majority} of the given DFAs.
+We decide to target the voters that are in a \emph{majority} of the given DFAs.
 
 Suppose the three DFAs are $D_1, D_2, D_3$, written as $D_i = (Q_i, \Sigma, \delta_i, q_{0,i}, F_i)$ for $i \in \{1,2,3\}$.
 Design a DFA $D$ that accepts the following language:
@@ -147,7 +154,7 @@ However, you may not use any techniques other than the definition of a DFA, and 
 
 \subsection{Product Construction}
 
-For these problems, just formally \textit{describe} a DFA that recognizes $L$; don't attempt to draw the DFA as it may be too large. 
+For these problems, just formally \emph{describe} a DFA that recognizes $L$; don't attempt to draw the DFA as it may be too large. 
 Instead, all you need to specify is a formal description of the 5 pieces of a DFA; $Q, \Sigma, \delta, q_0$, and $F$.
 
 \item Produce a DFA for the following languages:
@@ -175,7 +182,7 @@ Construct a DFA that recognizes the language $L_2 \cap (L_1 \cup \overline{L_3})
 
 \item \Level{2} Suppose two DFAs $D_1, D_2$ have $n_1, n_2$ states each, and $f_1, f_2$ final states each. Now form the DFA $D$ from the product construction for the \emph{union} of their languages. How many final states does $D$ have?
 
-\item \Level{2} Related to \cref{dfa_equal_no_product}, devise an algorithm that, on input two DFAs $D_1, D_2$, outputs True if $L(D_1) = L(D_2)$, and false otherwise (here you \textit{can} use the product construction).
+\item \Level{2} Related to \cref{dfa_equal_no_product}, devise an algorithm that, on input two DFAs $D_1, D_2$, outputs True if $L(D_1) = L(D_2)$, and false otherwise (here you \emph{can} use the product construction).
 
 \subsection{NFAs}
 
@@ -233,12 +240,12 @@ Show that there is a regular language $L$ for which $Square(L)$ is not regular.
 
 \item \Level{1} Recall the definition of $Double(L)$ from \cref{ex2017fsquaredouble}. Show that if $L$ is a CFL, then $Double(L)$ is also a CFL.
 
-\item \Level{2} Give an example of a context-free language $L$ that, for \textit{any} CFG with language $L$, requires \textit{at least} 2 variables. 
+\item \Level{2} Give an example of a context-free language $L$ that, for \emph{any} CFG with language $L$, requires \emph{at least} 2 variables. 
 Prove that there is no CFG for $L$ with only 1 variable.\footnote{Unfortunately the problem of determining if a given CFG is minimal with respect to the number of variables is undecidable, so brute-force may or may not work here.}
 
 \item \Level{4} Consider the string $a^n$ for some integer $n$. The language $\{a^n\}$ clearly is regular (it has only 1 string), and hence is context-free. A simple CFG for it is $S \to a\cdots a$. 
 
-We will consider the \textit{complexity of $a^n$} to be the following: we sum for every rule the number of variables and terminals in that rule as well as the $\to$ symbol. For example, the complexity of $a^n$ is at most $n+2$ since the grammar above has 1 variable, $n$ occurrences of the symbol $a$, and one $\to$ symbol.
+We will consider the \emph{complexity of $a^n$} to be the following: we sum for every rule the number of variables and terminals in that rule as well as the $\to$ symbol. For example, the complexity of $a^n$ is at most $n+2$ since the grammar above has 1 variable, $n$ occurrences of the symbol $a$, and one $\to$ symbol.
 
 We can improve this in some cases. For $a^9$, we can make the grammar $S \to BBB, B \to aaa$, which has 5 variable occurrences, 2 $\to$ occurrences, and 3 terminals, which sums to 10 (better than the trivial bound of 11).
 
@@ -270,7 +277,7 @@ B &\to ac \;|\;S\;|\;\varepsilon
 	\item The energy it is taking for PDAs to take a transition where it reads off of the input is increasing, so it may be a good idea to allow ``breaks" between them. I want every accepting computation of every string to consist of at least 1 $\varepsilon$-transition between each character read from the input, without worrying about what happens to the stack. Call these machines $\varepsilon$-PDAs. Then $\varepsilon$-PDAs still recognize the context-free languages.
 \end{enumerate}
 
-\item \Level{3} Consider two strings $w = w_1 \cdots w_n$ and $x = x_1 \cdots x_m$. We want to consider \textit{edits}: insertions, deletions, and substitutions. All such edits are equal; they have a ``cost'' of 1.
+\item \Level{3} Consider two strings $w = w_1 \cdots w_n$ and $x = x_1 \cdots x_m$. We want to consider \emph{edits}: insertions, deletions, and substitutions. All such edits are equal; they have a ``cost'' of 1.
 
 The \emph{edit distance of $w, x$}, denoted ${\textsf{ED}}(w,x)$, is the minimum size of a sequence of edits over all possible sequences of edits on $w$ to have $w$ equal to $x$. For example, if $w = abb$ and $x = bc$, then the (minimum) edit distance is 2; one such edit sequence is deleting $a$, and substituting the second $b$ for a $c$. Also, there is no edit sequence of length 1 to transform $abb$ into $bc$.
 
@@ -285,10 +292,10 @@ In other words, this language has all strings of the form $w\# x^{rev}$ where th
 	\item Show that for any fixed value of $k$ that $\textsf{Edit}(k)$ is context-free. (Hint: generalize $\textsf{Edit}(1)$.)
 \end{enumerate}
 
-\item \Level{3} A \textit{recursive automaton} is a 3-tuple $(M, P, \{D_k : k \in M \})$, where $M$ is a finite set of \textit{module names}, $P \in M$ is the \textit{start module}, and for each $k \in M$, there is an NFA $D_k$ over the alphabet $\Sigma \cup M$, and have pairwise disjoint states. 
+\item \Level{3} A \emph{recursive automaton} is a 3-tuple $(M, P, \{D_k : k \in M \})$, where $M$ is a finite set of \emph{module names}, $P \in M$ is the \emph{start module}, and for each $k \in M$, there is an NFA $D_k$ over the alphabet $\Sigma \cup M$, and have pairwise disjoint states. 
 
 In other words, the recursive automaton is a collection of NFAs that can ``call'' other NFAs in $M$ via a transition, including themselves. 
-The notion of computation from NFAs extends to here as well, except now we keep a \textit{stack} of which modules ``called'' which other modules, and in what order. 
+The notion of computation from NFAs extends to here as well, except now we keep a \emph{stack} of which modules ``called'' which other modules, and in what order. 
 We push onto this stack if we call another module, and we pop if we end in a final state of that module (and return to the module then on the top of the stack).
 We accept a string iff the string is in a final state of $P$ (the start module) and the stack of module calls is empty.
 		
@@ -327,11 +334,11 @@ Prove that the languages of recursive automata are exactly the CFLs.
 \{w \in \{0, 1\}^\star : \#_0(w) = (\#_1(w))^2 \}.
 \]
 
-\item \Level{2} A \textit{backtracking Turing Machine} (BTM) is just like a normal TM except that there is another transition that ``backtracks''--when taken from state $q$, this transition instantly resets the tape contents and tape head location to be exactly when the machine was last in state $q$. If the machine was not in state $q$ before, the tape does not change.
+\item \Level{2} A \emph{backtracking Turing Machine} (BTM) is just like a normal TM except that there is another transition that ``backtracks''--when taken from state $q$, this transition instantly resets the tape contents and tape head location to be exactly when the machine was last in state $q$. If the machine was not in state $q$ before, the tape does not change.
 
 Prove that the languages recognized by BTMs are equivalent to those recognized by ``standard'' (deterministic, single-tape) TMs.
 
-\item \Level{2} A \textit{stack Turing machine} (STM) is like a normal TM except in every tape cell there is, in addition to a symbol, a stack. On each transition taken, the machine, in addition to modifying the cell's symbol and move left or right, can push or pop from that individual cell's stack (or both, or neither, as how a PDA can). If the STM attempts to pop from a cell's stack that is empty, the computation terminates.
+\item \Level{2} A \emph{stack Turing machine} (STM) is like a normal TM except in every tape cell there is, in addition to a symbol, a stack. On each transition taken, the machine, in addition to modifying the cell's symbol and move left or right, can push or pop from that individual cell's stack (or both, or neither, as how a PDA can). If the STM attempts to pop from a cell's stack that is empty, the computation terminates.
 
 Prove that the languages recognized by STMs are equivalent to those recognized by ``standard'' (deterministic, single-tape) TMs.
 
@@ -359,11 +366,11 @@ However, this may not be ``minimal'' enough, because there could be still anothe
 
 Formally state this problem. Then show that this problem is decidable.
 
-\item \label{regex_crossword} \Level{3} You are given a grid $A[1..m][1..n]$ ($m$ rows, $n$ columns) as well as $m$ regular expressions $R_1, \cdots, R_m$ corresponding to each row, and $n$ more regular expressions $C_1, \cdots, C_n$ corresponding to each column. The alphabet of all regexes is $\Sigma$. Your task is to determine if there is a way of assigning a character in $\Sigma$ in each of the cells of $A$ such that the concatenation of the cells in row 1 (from left to right) is a string in $L(R_1)$, row 2's concatenation is a string in $L(R_2)$, as well as for all the other row and column regexes (columns concatenate from top to bottom). We say that this input has a \textit{solution} if there is such an assignment. 
+\item \label{regex_crossword} \Level{3} You are given a grid $A[1..m][1..n]$ ($m$ rows, $n$ columns) as well as $m$ regular expressions $R_1, \cdots, R_m$ corresponding to each row, and $n$ more regular expressions $C_1, \cdots, C_n$ corresponding to each column. The alphabet of all regexes is $\Sigma$. Your task is to determine if there is a way of assigning a character in $\Sigma$ in each of the cells of $A$ such that the concatenation of the cells in row 1 (from left to right) is a string in $L(R_1)$, row 2's concatenation is a string in $L(R_2)$, as well as for all the other row and column regexes (columns concatenate from top to bottom). We say that this input has a \emph{solution} if there is such an assignment. 
 
 For example, here is a graphical representation of a possible input with $\Sigma = \{a, b\}$:
 
-\begin{table}[!htb]
+\begin{table}[!htbp]
 	\centering
 	\begin{tabular}{llll}
 		\cline{2-4}
@@ -385,7 +392,7 @@ Let the language $\textsf{RegexCrossword}$ be the set of all instances $\langle 
 
 \item \Level{2} Prove that $INTERCFL_{TM} = \{ \langle M \rangle : M$ is a TM and $L(M)$ is the intersection of 2 CFLs, and $L(M)$ is also a CFL$\}$ is not decidable.
 
-\item \Level{3} Let $M$ be a TM. Call $M$ a \textit{narcissistic} TM if $L(M) = \{ \langle M \rangle \}$; in other words, the only string that $M$ recognizes is its own description. We will assume, without proof, a theorem called the ``recursion theorem'' (see Sipser Chapter 6 if you're interested): \textit{any} TM has the ability, as its first step, to get its own description as a string.
+\item \Level{3} Let $M$ be a TM. Call $M$ a \emph{narcissistic} TM if $L(M) = \{ \langle M \rangle \}$; in other words, the only string that $M$ recognizes is its own description. We will assume, without proof, a theorem called the ``recursion theorem'' (see Sipser Chapter 6 if you're interested): \emph{any} TM has the ability, as its first step, to get its own description as a string.
 \begin{enumerate}
 	\item Show that a narcissistic TM exists.
 	\item Let $L = \{ \langle M \rangle : M$ is a narcissistic TM$\}$. Prove that $L$ is not recognizable, and that $\overline{L}$ is not recognizable (Hint: reduce from a known non-recognizable language). 
