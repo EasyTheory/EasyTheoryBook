@@ -2,6 +2,22 @@
 
 \section{Turing Machines}
 
+\begin{enumerate}[resume]
+	\item \Level{2} Write a low-level description of a TM to recognize the language:
+	\[
+	\{w \in \{0, 1\}^\star : \#_0(w) = (\#_1(w))^2 \}.
+	\]
+	
+	\item \Level{2} A \emph{backtracking Turing Machine} (BTM) is just like a normal TM except that there is another transition that ``backtracks''--when taken from state $q$, this transition instantly resets the tape contents and tape head location to be exactly when the machine was last in state $q$. If the machine was not in state $q$ before, the tape does not change.
+	
+	Prove that the languages recognized by BTMs are equivalent to those recognized by ``standard'' (deterministic, single-tape) TMs.
+	
+	\item \Level{2} A \emph{stack Turing machine} (STM) is like a normal TM except in every tape cell there is, in addition to a symbol, a stack. On each transition taken, the machine, in addition to modifying the cell's symbol and move left or right, can push or pop from that individual cell's stack (or both, or neither, as how a PDA can). If the STM attempts to pop from a cell's stack that is empty, the computation terminates.
+	
+	Prove that the languages recognized by STMs are equivalent to those recognized by ``standard'' (deterministic, single-tape) TMs.
+	
+\end{enumerate}
+
 \section{Decidable Languages}
 
 \begin{enumerate}[resume]
@@ -44,6 +60,6 @@ For example, here is a graphical representation of a possible input with $\Sigma
 
 Let the language $\textsf{RegexCrossword}$ be the set of all instances $\langle A, R_1, \cdots, R_m, C_1, \cdots, C_n\rangle$ where $A$ is an $m \times n$ grid, $R_1, \cdots, R_m, C_1, \cdots, C_n$ are regexes, and there is a solution to $A$ as described above. Show that $\textsf{RegexCrossword}$ is decidable. (Hint: brute-force.)
 
-%\item \Level{4} Let $\textsf{RegexCrosswordWord}$ be the language similar to that in \cref{regex_crossword}, except now the cells can be filled with a string in $\Sigma^\star$ instead of just a single character. Is $\textsf{RegexCrosswordWord}$ decidable? Recognizable? 
+\item \Level{4} Let $\textsf{RegexCrosswordWord}$ be the language similar to that in \cref{regex_crossword}, except now the cells can be filled with a string in $\Sigma^\star$ instead of just a single character. Is $\textsf{RegexCrosswordWord}$ decidable? Recognizable? 
 
 \end{enumerate}

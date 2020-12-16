@@ -24,7 +24,7 @@ Can you say much about complexities for much larger $n$ (say, at least $10^5$)?
 
 \end{enumerate}
 
-\subsection{CNF}
+\section{CNF}
 
 \begin{enumerate}[resume]
 
@@ -34,7 +34,7 @@ Can you say much about complexities for much larger $n$ (say, at least $10^5$)?
 
 \end{enumerate}
 
-\subsection{PDAs}
+\section{PDAs}
 
 \begin{enumerate}[resume]
 
@@ -78,7 +78,7 @@ We accept a string iff the string is in a final state of $P$ (the start module) 
 Prove that the languages of recursive automata are exactly the CFLs.
 \end{enumerate}
 
-\subsection{Pumping Lemma for Context-Free Languages}
+\section{Pumping Lemma for Context-Free Languages}
 
 \begin{enumerate}[resume]
 \item \Level{2} For a language $L$, let $\textsf{Shuffle}(L)$ be the following language:
@@ -106,20 +106,3 @@ Prove that the languages of recursive automata are exactly the CFLs.
 \item \Level{4} Show that any unary context-free language is regular.
 \end{enumerate}
 
-\section{Turing Machines}
-
-\begin{enumerate}[resume]
-\item \Level{2} Write a low-level description of a TM to recognize the language:
-\[
-\{w \in \{0, 1\}^\star : \#_0(w) = (\#_1(w))^2 \}.
-\]
-
-\item \Level{2} A \emph{backtracking Turing Machine} (BTM) is just like a normal TM except that there is another transition that ``backtracks''--when taken from state $q$, this transition instantly resets the tape contents and tape head location to be exactly when the machine was last in state $q$. If the machine was not in state $q$ before, the tape does not change.
-
-Prove that the languages recognized by BTMs are equivalent to those recognized by ``standard'' (deterministic, single-tape) TMs.
-
-\item \Level{2} A \emph{stack Turing machine} (STM) is like a normal TM except in every tape cell there is, in addition to a symbol, a stack. On each transition taken, the machine, in addition to modifying the cell's symbol and move left or right, can push or pop from that individual cell's stack (or both, or neither, as how a PDA can). If the STM attempts to pop from a cell's stack that is empty, the computation terminates.
-
-Prove that the languages recognized by STMs are equivalent to those recognized by ``standard'' (deterministic, single-tape) TMs.
-
-\end{enumerate}
