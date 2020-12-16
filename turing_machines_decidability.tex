@@ -1,0 +1,49 @@
+\part{Turing Machines and Decidability}
+
+\section{Turing Machines}
+
+\section{Decidable Languages}
+
+\begin{enumerate}[resume]
+	
+\item \Level{2} Let $L$ be the language:
+\begin{align*}
+\{ \langle D, N, R, G, P \rangle :\;\text{$D$ is a DFA, $N$ is an NFA, $R$ is a regex, $G$ is a regular grammar,}\\
+\text{$P$ is a PDA, and $L(P) \subseteq ((L(D) \cap L(N)) \cup \overline{L(R)}) L(G)$ }   \}
+\end{align*}
+Show that $L$ is decidable (Hint: what is the intersection of a CFL and a regular language?)
+
+\item \Level{2} Let $WEIRD_{NFA} = \{ \langle M \rangle : M$ is an NFA, $M$ has at most 7 states, accepts $\varepsilon$, and $L(M)$ is infinite$\}$.
+Show that $WEIRD_{NFA}$ is decidable.
+
+\item \Level{2} Let $L$ be a language, and let $\textsf{Power}(L)$ be:
+\[
+\{ w^n : w \in L, n \ge 0 \}.
+\]
+Prove that if $L$ is recognizable, then $\textsf{Power}(L)$ is also recognizable.
+
+\item \Level{3} I'm concerned that the NFAs we usually deal with are ``too large'' and that we can make them even simpler. I want to determine, given an NFA $N$, whether or not there is some other NFA with fewer states than that also recognizes the language $L(N)$. 
+
+However, this may not be ``minimal'' enough, because there could be still another NFA with fewer transitions than $N$ still with the same number of states and language $L(N)$. 
+
+Formally state this problem. Then show that this problem is decidable.
+
+\item \label{regex_crossword} \Level{3} You are given a grid $A[1..m][1..n]$ ($m$ rows, $n$ columns) as well as $m$ regular expressions $R_1, \cdots, R_m$ corresponding to each row, and $n$ more regular expressions $C_1, \cdots, C_n$ corresponding to each column. The alphabet of all regexes is $\Sigma$. Your task is to determine if there is a way of assigning a character in $\Sigma$ in each of the cells of $A$ such that the concatenation of the cells in row 1 (from left to right) is a string in $L(R_1)$, row 2's concatenation is a string in $L(R_2)$, as well as for all the other row and column regexes (columns concatenate from top to bottom). We say that this input has a \emph{solution} if there is such an assignment. 
+
+For example, here is a graphical representation of a possible input with $\Sigma = \{a, b\}$:
+
+\begin{table}[!htbp]
+	\centering
+	\begin{tabular}{llll}
+		\cline{2-4}
+		\multicolumn{1}{l|}{$(bba)^\star$} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} \\ \cline{2-4} 
+		\multicolumn{1}{l|}{$b(a^\star b)^\star$} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} \\ \cline{2-4} 
+		&     $(a \cup bb)^\star$                 &       $(ba)^\star ab$                &   $((ba)^\star \cup (ab)^\star)^\star$                
+	\end{tabular}
+\end{table}
+
+Let the language $\textsf{RegexCrossword}$ be the set of all instances $\langle A, R_1, \cdots, R_m, C_1, \cdots, C_n\rangle$ where $A$ is an $m \times n$ grid, $R_1, \cdots, R_m, C_1, \cdots, C_n$ are regexes, and there is a solution to $A$ as described above. Show that $\textsf{RegexCrossword}$ is decidable. (Hint: brute-force.)
+
+%\item \Level{4} Let $\textsf{RegexCrosswordWord}$ be the language similar to that in \cref{regex_crossword}, except now the cells can be filled with a string in $\Sigma^\star$ instead of just a single character. Is $\textsf{RegexCrosswordWord}$ decidable? Recognizable? 
+
+\end{enumerate}

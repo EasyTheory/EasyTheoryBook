@@ -1,0 +1,175 @@
+\part{Regular Languages}
+
+\section{DFAs}
+\begin{enumerate}
+\item Produce a state diagram of a DFA for the following languages:
+\begin{enumerate} 
+
+\item \Level{1} All strings except $\varepsilon$.
+
+\item \Level{1} The language $\{\varepsilon, a, ab\}$.
+
+\item \Level{1} All strings of length at most 3.
+
+\item \Level{1} All strings that end in 010.
+
+\item \label{ex2017prod1} \Level{1} All strings having at least one 0.
+
+\item \label{ex2017fprod1} \Level{1} All strings starting with a 0.
+
+\item \label{ex2017prod2} \Level{2} All strings such that their binary representation is not divisible by 3.
+
+\item \Level{2} All strings except 010.
+
+\item \Level{2} All strings that have the same number of 01 substrings as 10 substrings.
+
+\item \Level{2} All strings that contain 0100 as a substring.
+
+\item \Level{2} All strings that have 011 as a substring at least twice.
+
+\item \Level{2} All strings over $\Sigma = \{0\}$ that have the same number of 0 and 00 substrings (Hint: what strings are actually in the language?)
+
+\item \label{ex2017fprod2} \Level{3}  All strings that do not contain the subsequence 010.
+
+\item \Level{3} All strings that do not contain the subsequence 010.
+
+\end{enumerate}
+
+\item \Level{2} For a language $L \subseteq \{0,1\}^\star$, let $L^c = \{w^c : w \in L\}$, where $w^c$ means that every 0 in $w$ is a 1 in $w^c$, and every 1 in $w$ is a 0 in $w^c$.
+Prove that if $L$ is a regular language, then $L^c$ is a regular language.
+
+\item \Level{2} Give a formal description of a DFA (by identifying all 5 parts precisely) that recognizes $L = \{w \in \{0,1\}^\star :$ the number of 1's in $w$ is a multiple of 355\}.
+
+\item  \label{ex2017fsquaredouble} \Level{2} Let $Square(L) = \{ ww : w \in L\}$, and $Double(L) = \{wx : w, x \in L \}$.
+Explain why, in general, $Square(L) \ne Double(L)$.
+
+\item \Level{2} I am running for office and my three aides have each designed a DFA to solve a problem we are having in gathering voters (indeed each DFA describes, in some format, the voters we want to target).
+However, all three are having trouble coordinating since they have each designed their DFAs differently, but also that their DFAs do not have the same language.
+Since the election is coming soon, we cannot possibly target all voters in the languages in at least one of the DFAs.
+And we cannot target just the voters that are in common with the three DFAs, because we project I won't win the election then.
+We decide to target the voters that are in a \emph{majority} of the given DFAs.
+
+Suppose the three DFAs are $D_1, D_2, D_3$, written as $D_i = (Q_i, \Sigma, \delta_i, q_{0,i}, F_i)$ for $i \in \{1,2,3\}$.
+Design a DFA $D$ that accepts the following language:
+\[
+L = \{ w \in \Sigma^\star : w\;\text{is in at least two of $L(D_1), L(D_2), L(D_3)$}\},
+\]
+based on $D_1, D_2, D_3$.
+Specify all 5 pieces of $D$ in terms of those of $D_1, D_2, D_3$.
+Argue why your construction works.
+
+\item \Level{2} True or false: if one repeatedly deletes states from $M$ that have no incoming transitions from other states, and proceeds until there are no such states to obtain a DFA $M'$, then $L(M) = L(M')$.
+
+\item \Level{2} True or false: if $\Sigma=\{0,1\}$, produce DFA $M'$ by changing every 0 transition in $M$ to a 1 transition in $M'$, and vice versa. Then $L(M) \cap L(M') = \emptyset$.
+
+\item \Level{2} Let $M$ be a DFA, and consider applying closure under complement to get a DFA for $\overline{L(M)}$; call it $M'$. 
+Show that if $M$ has the smallest number of states possible for any DFA to recognize $L(M)$, then $M'$ has the same for $\overline{L(M)}$.
+
+\item \Level{3} For a string $z$, let $|z|_x$ be the number of occurrences of $x$ in $z$.
+For example, {\tt |banana|}$_{\tt ana} = 2$. 
+Now consider each of the following languages; you can assume without proof that they are regular.
+Determine whether or not they are finite languages, and explain.
+\begin{enumerate}
+	\item $\{z \in \{0,1\}^\star : |z|_0 = |z|_{00} = |z|_{1} = |z|_{11}\}$.
+	\item $\{z \in \{0,1\}^\star : |z|_{00} = |z|_{11} = |z|_{000} = |z|_{111}\}$.
+	\item $\{z \in \{0,1\}^\star : |z|_0 = |z|_{1} = |z|_{01} = |z|_{10}\}$.
+\end{enumerate}
+
+\item \Level{3} Let $\Sigma_{2} = \{0, 1\}$, and define $\Sigma = \Sigma_{2}^3$. Informally, $\Sigma$ is the set of triples of the form $(a, b, c)$ where $a, b, c$ are single binary digits. Consider a string $s \in \Sigma^\star$: it is a sequence of such triples. We want to ``verify" binary addition of numbers in the first two coordinates by checking that it is equal to the third. Let $A$ be the language of such triples such that the concatenation of the first coordinates, as a number, and the concatenation of the second coordinates, as a number, sum to be equal to the third. For example, if $w = (0, 1, 1)(1,1,1)(0,0,1)(1,0,1)$, this is encoding $0101_2 + 1100_2 = 1111_2$, which is false; therefore, $w \notin A$. Prove that $A$ is regular.
+
+\item \Level{3} After observing your DFA construction skills, a group called the {\tt SuperSecretDFA} organization has hired you. This group markets on its website that ``Our single DFA is the smallest and most efficient of any regular language over $\{0,1\}$.''
+By this, they mean that if you present their black box program with a regular language $L$, then it will produce a DFA with the smallest number of states that recognizes $L$.
+
+We do not know the exact details of their black box, but they have generously noted that a DFA is the underlying object.
+Most likely, the machine produces a copy of their DFA $D$, adjusts $D$'s transition function, and deletes all unnecessary states (or runs some DFA minimization algorithm) to give you the ``optimized'' DFA $D'$.
+
+Because you were so considerate when interviewing the group, they also divulged to you that their DFA $D$, before copying, has a fixed number of states $n$, and at no point do they increase the number of states beyond $n$ (for generation efficiency reasons).
+
+After hearing this information, you become skeptical of their machine's capability.
+
+Describe a regular language $L$ that their super secret DFA cannot possibly recognize only knowing the number of states ($n$) it has, and give a convincing argument as to why it cannot recognize $L$.
+
+\item \label{dfa_equal_no_product} \Level{4} Devise an algorithm that, on input two DFAs $D_1, D_2$, outputs True if $L(D_1) = L(D_2)$, and false otherwise.
+However, you may not use any techniques other than the definition of a DFA, and any tools from prerequisite material (i.e., you may not use the product construction or other closure properties here).
+
+\subsection{Product Construction}
+
+For these problems, just formally \emph{describe} a DFA that recognizes $L$; don't attempt to draw the DFA as it may be too large. 
+Instead, all you need to specify is a formal description of the 5 pieces of a DFA; $Q, \Sigma, \delta, q_0$, and $F$.
+
+\item Produce a DFA for the following languages:
+\begin{enumerate}
+
+
+\item \Level{1} The intersection of the languages in \cref{ex2017prod1,ex2017prod2}.
+
+\item \Level{2} The symmetric difference of the languages in \cref{ex2017prod1,ex2017prod2}.
+
+\item \Level{2} All strings such that the number of 0s is even, the number of 1s is divisible by 3, and the length of the string is divisible by 5.
+
+\item \Level{2} The intersection of the languages (and complementing the second) of \cref{ex2017fprod1,ex2017fprod2}.
+
+\item \Level{2} Consider the following languages:
+\begin{itemize}
+	\item $L_1 = \{ w \in \{0,1,2\}^\star : w$ either starts with a 0 and ends with a 0, or starts with a 1 and ends with a 1, or is $\varepsilon\}$,
+	\item $L_2 = \{w \in \{0,1,2\}^\star : w$ starts with 1$\}$, and
+	\item $L_3 = \{w \in \{0,1,2\}^\star : w$ is the ternary representation of an integer multiple of 4$\}$.
+\end{itemize}
+Construct a DFA that recognizes the language $L_2 \cap (L_1 \cup \overline{L_3})$.
+\end{enumerate}
+
+
+
+\item \Level{2} Suppose two DFAs $D_1, D_2$ have $n_1, n_2$ states each, and $f_1, f_2$ final states each. Now form the DFA $D$ from the product construction for the \emph{union} of their languages. How many final states does $D$ have?
+
+\item \Level{2} Related to \cref{dfa_equal_no_product}, devise an algorithm that, on input two DFAs $D_1, D_2$, outputs True if $L(D_1) = L(D_2)$, and false otherwise (here you \emph{can} use the product construction).
+
+\subsection{NFAs}
+
+\item \label{ex2017fnfa} \Level{1} Consider the following NFA:
+
+\begin{center}
+	\begin{tikzpicture}[shorten >=1pt,node distance=2.5cm,on grid,auto,initial text={},font=\large,every state/.style={align=center,minimum size=1cm},line width=0.4mm] 
+	\node[state,accepting,initial,inner sep=5pt] (q_0)   {$q_0$}; 
+	\node[state] (q_1) [right=of q_0] {$q_1$}; 
+	\node[state] (q_2) [below=of q_0] {$q_2$}; 
+	\node[state,accepting] (q_3) [right=of q_2] {$q_3$};
+	\path[->] 
+	(q_0) edge [bend left=10] node {$b, \varepsilon$} (q_1)
+	edge node {$a$} (q_2)
+	(q_1) edge [bend left=10] node {$a$} (q_0)
+	(q_2) edge [right] node {$a, \varepsilon$} (q_1)
+	edge [loop left] node {$b$} ()
+	(q_2) edge node {$b$} (q_3)
+	(q_3) edge [right] node {$a, \varepsilon$} (q_1);
+	\end{tikzpicture}
+\end{center}
+
+Convert this NFA into an equivalent DFA.
+
+\item \Level{1} Show that if $L$ is regular, then $OIF(L) = \{1w : w \in L \}$ is also regular.
+
+\item \Level{2} Show that if $L$ is regular, then $\#(L) = \{1^{|w|} : w \in L\}$ is also regular.
+
+\item \Level{2} Show that if $L$ is regular, then $L^{rev} = \{w^{rev} : w \in L\}$ where $w^{rev}$ is the reverse of $w$, is also regular (Hint: be careful.)
+
+\item \Level{3} Show that if $L$ is regular (and the alphabet contains 1, but is not necessarily equal to 1), then $\#^{-1}(L) = \{w : 1^{|w|} \in L\}$ is also regular.
+
+
+
+\subsection{Regular Expressions}
+
+\item \Level{1} Convert the DFA for \cref{ex2017fprod1} into an equivalent regex.
+
+\subsection{Pumping Lemma for Regular Languages}
+
+\item \Level{2} Recall the definition of $Square(L)$ from \cref{ex2017fsquaredouble}. 
+Show that there is a regular language $L$ for which $Square(L)$ is not regular.
+
+\item \Level{4} Let $L$ be any unary language, regular or not. Show that $L^\star$ is regular.
+
+\subsection{Regular Grammars}
+
+\item \Level{1} Convert the NFA from \cref{ex2017fnfa} into an equivalent regular grammar.
+
+\end{enumerate}

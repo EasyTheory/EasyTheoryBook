@@ -1,0 +1,125 @@
+\part{Context-Free Languages}
+
+\section{CFGs}
+
+\begin{enumerate}[resume]
+
+\item \label{summer_2017_cfg} \Level{1} Produce a CFG $G$ for $L_1 \cup L_2$ where $L_1 = \{0^n 1^n 2^m 3^m : n,m \ge 0 \}$ and $L_2 = \{0^n 1^m 2^m 3^n : n, m \ge 0 \}$.
+
+\item \Level{1} Recall the definition of $Double(L)$ from \cref{ex2017fsquaredouble}. Show that if $L$ is a CFL, then $Double(L)$ is also a CFL.
+
+\item \Level{2} Give an example of a context-free language $L$ that, for \emph{any} CFG with language $L$, requires \emph{at least} 2 variables. 
+Prove that there is no CFG for $L$ with only 1 variable.\footnote{Unfortunately the problem of determining if a given CFG is minimal with respect to the number of variables is undecidable, so brute-force may or may not work here.}
+
+\item \Level{4} Consider the string $a^n$ for some integer $n$. The language $\{a^n\}$ clearly is regular (it has only 1 string), and hence is context-free. A simple CFG for it is $S \to a\cdots a$. 
+
+We will consider the \emph{complexity of $a^n$} to be the following: we sum for every rule the number of variables and terminals in that rule as well as the $\to$ symbol. For example, the complexity of $a^n$ is at most $n+2$ since the grammar above has 1 variable, $n$ occurrences of the symbol $a$, and one $\to$ symbol.
+
+We can improve this in some cases. For $a^9$, we can make the grammar $S \to BBB, B \to aaa$, which has 5 variable occurrences, 2 $\to$ occurrences, and 3 terminals, which sums to 10 (better than the trivial bound of 11).
+
+For what $n$ can we have a better complexity than $n+2$, and what $n$ require $n+2$?
+Write a program to generate the complexity (with a CFG with that complexity) for all $n \le 100$. 
+Discuss how you designed your program, as well as discuss what you believe the ``correct'' answer is. 
+Can you say much about complexities for much larger $n$ (say, at least $10^5$)?
+
+\end{enumerate}
+
+\subsection{CNF}
+
+\begin{enumerate}[resume]
+
+\item \Level{2} Convert the CFG in \cref{ex2017fcfg} into CNF.
+
+\item \Level{2} Consider any regular grammar. If we wanted to convert it into CNF, show that one of the five steps in the conversion process can be skipped.
+
+\end{enumerate}
+
+\subsection{PDAs}
+
+\begin{enumerate}[resume]
+
+\item \label{ex2017fcfg} \Level{1}  Convert the following CFG into an equivalent PDA.
+\begin{align*}
+S &\to aBb\\
+B &\to ac \;|\;S\;|\;\varepsilon
+\end{align*}
+
+
+\item \Level{1} Produce an equivalent PDA $P$ for the grammar in \cref{summer_2017_cfg}.
+
+\item \Level{2} Prove or disprove the following statements:
+\begin{enumerate}
+	\item Stacks are getting expensive lately! I limit my PDAs to only have a maximum stack height of 50, and if during a computation the PDA tries to push on a stack with height of 50, the computation terminates. My model of PDAs then still recognizes the context-free languages.
+	\item The energy it is taking for PDAs to take a transition where it reads off of the input is increasing, so it may be a good idea to allow ``breaks" between them. I want every accepting computation of every string to consist of at least 1 $\varepsilon$-transition between each character read from the input, without worrying about what happens to the stack. Call these machines $\varepsilon$-PDAs. Then $\varepsilon$-PDAs still recognize the context-free languages.
+\end{enumerate}
+
+\item \Level{3} Consider two strings $w = w_1 \cdots w_n$ and $x = x_1 \cdots x_m$. We want to consider \emph{edits}: insertions, deletions, and substitutions. All such edits are equal; they have a ``cost'' of 1.
+
+The \emph{edit distance of $w, x$}, denoted ${\textsf{ED}}(w,x)$, is the minimum size of a sequence of edits over all possible sequences of edits on $w$ to have $w$ equal to $x$. For example, if $w = abb$ and $x = bc$, then the (minimum) edit distance is 2; one such edit sequence is deleting $a$, and substituting the second $b$ for a $c$. Also, there is no edit sequence of length 1 to transform $abb$ into $bc$.
+
+Consider the following language for a given value of $k$ (where $x^{rev}$ is the reverse of string $x$):
+\[
+\textsf{Edit(k)} = \{ w \# x^{rev} : w, x \in \{a, b, c\}^\star, \textsf{ED}(w,x) \le k  \}.
+\]
+In other words, this language has all strings of the form $w\# x^{rev}$ where the edit distance is less than $k$.
+\begin{enumerate}
+	\item Produce a PDA $P$ that recognizes $\textsf{Edit(1)}$.
+	\item Convert $P$ into an equivalent CFG $G$ using the techniques from class (Hint: write a program to output all the rules.)
+	\item Show that for any fixed value of $k$ that $\textsf{Edit}(k)$ is context-free. (Hint: generalize $\textsf{Edit}(1)$.)
+\end{enumerate}
+
+\item \Level{3} A \emph{recursive automaton} is a 3-tuple $(M, P, \{D_k : k \in M \})$, where $M$ is a finite set of \emph{module names}, $P \in M$ is the \emph{start module}, and for each $k \in M$, there is an NFA $D_k$ over the alphabet $\Sigma \cup M$, and have pairwise disjoint states. 
+
+In other words, the recursive automaton is a collection of NFAs that can ``call'' other NFAs in $M$ via a transition, including themselves. 
+The notion of computation from NFAs extends to here as well, except now we keep a \emph{stack} of which modules ``called'' which other modules, and in what order. 
+We push onto this stack if we call another module, and we pop if we end in a final state of that module (and return to the module then on the top of the stack).
+We accept a string iff the string is in a final state of $P$ (the start module) and the stack of module calls is empty.
+		
+Prove that the languages of recursive automata are exactly the CFLs.
+\end{enumerate}
+
+\subsection{Pumping Lemma for Context-Free Languages}
+
+\begin{enumerate}[resume]
+\item \Level{2} For a language $L$, let $\textsf{Shuffle}(L)$ be the following language:
+\[
+\{ w : x \in L, |w| = |x|,\;\text{and $w$ is a permutation of the letters in $x$} \}.
+\]
+\begin{enumerate}
+	\item Prove that regular languages are \emph{not} closed under shuffle. (Hint: use part (b))
+	\item Prove that context-free languages are \emph{not} closed under shuffle.
+\end{enumerate}
+
+\item \Level{2} Let $L = \{w \in \{0, 1\}^\star : |w|\;\text{is a power of $n$, and $n$ is even}\}$. Prove that $L$ is not context-free.
+
+\item \Level{2} Recall the definition of $Square(L)$ from \cref{ex2017fsquaredouble}. 
+	Show that there is a CFL $L$ for which $Square(L)$ is not a CFL.
+
+\item \Level{2} Produce two non-context-free languages $L_1, L_2$ such that $L_1 \cap L_2$ is context-free.
+
+\item \Level{3} Produce a non-context-free language $L$ such that $L^\star$ is context-free.
+
+\item \Level{4} Produce a non-context-free language $L$ such that $\overline{L}$ is also non-context-free.
+
+\item \Level{4} Produce two non-context-free languages $L_1, L_2$ such that $L_1 L_2$ is context-free.
+
+\item \Level{4} Show that any unary context-free language is regular.
+\end{enumerate}
+
+\section{Turing Machines}
+
+\begin{enumerate}[resume]
+\item \Level{2} Write a low-level description of a TM to recognize the language:
+\[
+\{w \in \{0, 1\}^\star : \#_0(w) = (\#_1(w))^2 \}.
+\]
+
+\item \Level{2} A \emph{backtracking Turing Machine} (BTM) is just like a normal TM except that there is another transition that ``backtracks''--when taken from state $q$, this transition instantly resets the tape contents and tape head location to be exactly when the machine was last in state $q$. If the machine was not in state $q$ before, the tape does not change.
+
+Prove that the languages recognized by BTMs are equivalent to those recognized by ``standard'' (deterministic, single-tape) TMs.
+
+\item \Level{2} A \emph{stack Turing machine} (STM) is like a normal TM except in every tape cell there is, in addition to a symbol, a stack. On each transition taken, the machine, in addition to modifying the cell's symbol and move left or right, can push or pop from that individual cell's stack (or both, or neither, as how a PDA can). If the STM attempts to pop from a cell's stack that is empty, the computation terminates.
+
+Prove that the languages recognized by STMs are equivalent to those recognized by ``standard'' (deterministic, single-tape) TMs.
+
+\end{enumerate}

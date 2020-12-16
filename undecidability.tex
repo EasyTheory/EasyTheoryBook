@@ -1,0 +1,20 @@
+\part{Undecidability}
+
+\section{Undecidable Languages}
+
+\begin{enumerate}[resume]
+
+\item \Level{2} I want to know if my compiler, represented as a CFG, conforms to a given specification, also represented as a CFG. Let $L = \{\langle G_1, G_2 \rangle : G_1, G_2$ are CFGs and $L(G_1) \subseteq L(G_2)\}$. Prove that $L$ is undecidable.
+
+\item \Level{2} Prove that $SUPEROBEY_{TM} = \{ \langle M_1, M_2 \rangle : M_1, M_2$ are TMs, $L(M_1) \subseteq L(M_2)$, and $L(M_2)$ contains at least 1 more string than $L(M_1)$ does$\}$ is not decidable. (Hint: $\mathsf{E}_{\mathsf{TM}}$)
+
+\item \Level{2} Prove that $INTERCFL_{TM} = \{ \langle M \rangle : M$ is a TM and $L(M)$ is the intersection of 2 CFLs, and $L(M)$ is also a CFL$\}$ is not decidable.
+
+\item \Level{3} Let $M$ be a TM. Call $M$ a \emph{narcissistic} TM if $L(M) = \{ \langle M \rangle \}$; in other words, the only string that $M$ recognizes is its own description. We will assume, without proof, a theorem called the ``recursion theorem'' (see Sipser Chapter 6 if you're interested): \emph{any} TM has the ability, as its first step, to get its own description as a string.
+\begin{enumerate}
+	\item Show that a narcissistic TM exists.
+	\item Let $L = \{ \langle M \rangle : M$ is a narcissistic TM$\}$. Prove that $L$ is not recognizable, and that $\overline{L}$ is not recognizable (Hint: reduce from a known non-recognizable language). 
+\end{enumerate}
+
+\item \Level{3} I am concerned that my Python program is too complicated, and can be simplified without changing its behavior. It would be nice if I can check whether there is such a simpler program. We aren't concerned with what ``simplified'' means other than the size of the program. Let $L = \{ \langle P \rangle : P$ is a Python program and there is no other Python program smaller in size than $|\langle P \rangle|$ with language $L(P)\}$. Show that $L$ is not recognizable (Hint: you may assume the recursion theorem of the last problem).
+\end{enumerate}
