@@ -1,0 +1,49 @@
+\chapter{P, NP, NP-Completeness, and Boolean Satisfiability}
+
+\section{Objectives}
+
+\begin{itemize}
+	\item Describe where we are in classifying problems.
+	\item Describe what it means for a problem to be NP-Complete.
+	\item Be able to determine the satisfiability of a Boolean formula.
+\end{itemize}
+
+\section{Introduction + Motivation}
+
+For the remainder of the course, let's focus only on problems $A$ that \emph{are} solvable.
+Clearly, they must take some amount of time/resources/etc. to solve; the question we want to address is: how \emph{much} such resources does an algorithm need to solve some problem $A$?
+
+\section{P and NP}
+
+Until recently,\footnote{This has changed to having ``fast'' representing ``log-linear'' runtime (i.e., of the form $O(n \log^c n)$ for some constant $c$), and any runtime ``more'' than this is ``slow.''} one important measure of distinguishing ``slow'' from ``fast'' algorithms was that when they ran in ``polynomial time,'' then they were ``fast''; otherwise, they were ``slow.''
+
+\section{NP-Complete Problems}
+
+\subsection{How to Prove a Problem is NP-Complete}
+
+The steps to proving a problem $A$ is $\NP$-complete are:
+\begin{enumerate}
+	\item \textbf{Prove $A \in \NP$}. Describe how a ``guessed'' solution can be verified in deterministic polynomial time.
+	\item \textbf{Prove that $A$ is $\NP$-hard}. Reduce a known $\NP$-hard problem to $A$. Follow the following steps to accomplish this:
+	\begin{enumerate}
+		\item State the known $\NP$-hard problem $B$.
+		\item Explain the abstract view of the reduction.
+		\todo{Add figure of reduction}
+		\item Describe the transformation.
+		\item Prove the transformation can be accomplished in deterministic polynomial time.
+		\item \underline{Prove a solution to $A$ is equivalent to a solution to the corresponding instance of $B$.} (This is the most important step.)
+	\end{enumerate}
+	\item \textbf{Summarize and Conclude}.
+\end{enumerate}
+
+\section{Boolean Satisfiability}
+
+The ``first'' $\NP$-complete problem is \emph{boolean satisfiability}.
+
+\problem{Satisfiability (SAT)}{
+	A set $U$ of variables and a collection $C$ of clauses over $U$.
+}{
+	Is there a truth assignment to the variables in $U$ that satisfies $C$?
+}
+
+\section{Problems}

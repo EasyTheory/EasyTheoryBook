@@ -1,0 +1,64 @@
+\chapter{Introduction and Review: Logic, Proofs, Sets, and Functions, Relations, and Regular Expressions}
+
+\section{Objectives}
+
+\begin{itemize}
+	\item Describe and apply basic operations of logic.
+	\item Describe and apply basic operations of set theory (and languages as sets of strings).
+	\item Define the properties of functions and equivalence relations.
+	\item Review and practice reading and writing regular expressions.
+\end{itemize}
+
+\section{Introduction + Motivation}
+
+\section{Definitions}
+
+Some common sets are the \emph{natural numbers} $\natnums$, which are the numbers $0, 1, 2, 3, \cdots$; the \emph{integers} $\integers$, which are the numbers $\cdots, -3, -2, -1, 0, 1, 2, 3, \cdots$; and the \emph{real numbers} $\reals$.
+
+A \emph{set} is a collection of ``elements'' without duplicates, usually written with curly braces and not in any particular order, like: \{3, 4, 2, ``New York''\}.
+If $A$ and $B$ are two sets, then the notation $A \subseteq B$ indicates that $A$ is a \emph{subset} of $B$, in that every element of the set $A$ is also in the set $B$. An example is $A = \{0, 1, 4\}$ and $B = \{0, 1, 4, 7\}$.
+If $A \subseteq B$ and some element of $B$ is also not in $A$, $A$ is a \emph{proper} subset of $B$, written $A \subset B$ (and the previous example shows that $A$ is a proper subset of $B$).
+The set with no elements is called the \emph{empty set}, written $\emptyset$.
+
+If $A$ is a set, then $\powerset{A}$ is the \emph{power set} of $A$, which is the collection of all subsets of $A$, including $A$ itself.
+
+\section{Examples}
+
+\section{Problems}
+
+\begin{enumerate}
+	\item Let $L = \{a, b, c\}$; compute the set $LL$.
+	\item Let $L = \{0, 1, 2, 3, 4, 5, 6, 7, 8, 9\}$; describe the language $L^+$ in English.
+	\item For each of the functions below, indicate which of the properties hold: total, one-to-one, onto, and/or bijection.
+	\begin{enumerate}
+		\item $m: \natnums \to \natnums$ defined by $m(x) = \min(x, 2)$.
+		\item $s: \natnums \to \reals$ defined by $s(x) = \sqrt{x}$.
+		\item $d: \natnums \to \reals$ defined by $d(x) = \frac{1}{x}$.
+		\item $i: \natnums \to \natnums$ defined by $i(x) = x$.
+		\item $c: \reals^{0+} \to \natnums$ defined by $c(x) = \lceil x \rceil$, where $\reals^{0+}$ indicates non-negative real numbers.
+		\item $e: \natnums \to \natnums$ defined by $e(x) = 2x$.
+		\item $f: \natnums \to \integers$ defined by:
+		\[
+			f(x) = 
+			\begin{cases}
+				\frac{x}{2},& \text{if $x$ is even}\\
+				\frac{-x-1}{2},& \text{otherwise}
+			\end{cases}
+		\]
+	\end{enumerate}
+	
+	\item For the following languages, show a corresponding regular expression.
+	\begin{enumerate}
+		\item All strings in $\{0,1\}^\star$ containing exactly two 0's.
+		\item All strings in $\{0,1\}^\star$ containing at least two 0's.
+		\item All strings in $\{0,1\}^\star$ that do not end in 01.
+	\end{enumerate}
+
+	\item  In each case below, find a string of minimum length in $\{a, b\}^\star$ not in the language corresponding to the given regular expression.
+	\begin{enumerate}
+		\item $b^\star (ab)^\star a^\star$
+		\item $(a^\star \orop b^\star)(a^\star \orop b^\star)(a^\star \orop b^\star)$
+		\item $a^\star (baa^\star)^\star b^\star$
+		\item $b^\star (a \orop ba)^\star b^\star$
+	\end{enumerate}
+\end{enumerate}

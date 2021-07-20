@@ -1,0 +1,75 @@
+\chapter{DFA Minimization}
+
+\section{Objectives}
+
+\begin{itemize}
+	\item Apply the minimization algorithm to finite automata.
+\end{itemize}
+
+\section{Introduction + Motivation}
+
+We want to minimize the size of a finite automaton as much as possible, \emph{as long as it has the same language as that of the original.}
+
+\section{Minimization}
+
+Think about the following two states:
+
+\todo{fix the transition labels and state names}
+\begin{tikzpicture}[scale=0.7, shorten >=1pt,node distance=5cm,on grid,auto,initial text={},every state/.style={align=center},line width=0.4mm] 
+	\node[state] (q_0)   {$q_0$}; 
+	\node[state] (q_1) [below=of q_0] {$q_1$}; 
+	\node[state] (q_2) [right=of q_0] {$q_2$}; 
+	\node[state] (q_3) [below=of q_2] {$q_3$}; 
+	\path[->] 
+	(q_0) edge node {$a$} (q_2)
+	(q_0) edge node {$b$} (q_3)
+	(q_1) edge node {$a$} (q_2)
+	(q_1) edge node {$b$} (q_3)
+	;
+\end{tikzpicture}
+
+Clearly these two states ``do the same thing,'' since their transitions go to identically the same states, given the same input from both.
+Here, we can just merge the two states together:
+
+\todo{Same example, one state on the left with the name containing the original two}
+
+However, it may be more complicated to  figure out, say, this example of what states are the ``same'':
+
+\todo{Bigger example}
+
+One attempt to minimize an automaton $M$ is to try all ``smaller'' automata $m$, and check if the languages of $M$ and $m$ are the same.
+Several problems arise: if $M$ is moderately big, the number of automata smaller than it is \emph{enormous}.
+Setting that aside, how would one check  if $M$ and $m$ have the same language, in general? Note that $M, m$ have to accept the same strings, \emph{and not accept} the same strings.
+If you have a small example of $M, m$ in front of you, maybe that can be done by inferring some properties of both. 
+But in general, how would that be done? Checking all infinitely many strings against both machines clearly will take too long, so we need a better idea.
+
+\subsection{Distinguishing States}
+
+Instead of thinking about two states $p, q$ and reading a single character, let's think about \emph{every possible string that can be read from $p, q$}.
+If, for \emph{any} string $w \in \Sigma^\star$, we have that reading $w$ from $p, q$ has the resulting states $p', q'$ either both accepting or both rejecting, then $p, q$ are ``equivalent'' in terms of acceptance. 
+Note that the resulting states \emph{may not be identically the same state}.
+
+This generalizes our idea before: the two states above went to the same states on the same transitions, so anything read after that must be identically the same state from both, hence they must agree.
+However, this might not always be the case, as in this example:
+
+\todo{Bigger example again}
+
+But now suppose we have this example, where $p', q'$ are states we \emph{already know} are not equivalent:
+
+\todo{$p, q, p', q'$ example}
+
+Then we must know that $p, q$ are not equivalent either, because if they were, then $p', q'$ must be, since reading any string from $p, q$ results in the same state.
+This yields a simple algorithm:
+
+%\begin{algorithm}
+%	\caption{MinimizeFA}
+%	\begin{algorithmic}[1]
+%		\State Input: $\FA$ $M$
+%		\State Output: $\FA$ $M'$ with the same language as $M$, and minimum number of states possible.
+%		\EndProcedure
+%	\end{algorithmic}
+%\end{algorithm}
+
+\section{Example}
+
+\section{Problems}

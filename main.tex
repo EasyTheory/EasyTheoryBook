@@ -1,71 +1,150 @@
-\documentclass[a4paper,american,12pt]{book}
-\usepackage[utf8]{inputenc}% Unicode rules
-\usepackage[T1]{fontenc} % ALWAYS use even in english, see : https://tex.stackexchange.com/questions/664/why-should-i-use-usepackaget1fontenc
-\usepackage{microtype} % typographic enhancements
-\usepackage{babel} % Language related adjustments
-\usepackage{xcolor}
-\usepackage{mathtools} % better than amsmath 
-\usepackage{amssymb} % but requires to load amssymb
-\usepackage{tikz}
-\usetikzlibrary{automata,positioning,arrows.meta}
-\usepackage{enumitem} %list made easier
-\usepackage{mdframed} % frames and stuff
-\usepackage{hyperref} %I want my links in PDF 
-\usepackage{cleveref} % Eception to the rule : ALWAYS load AFTER HYPERREF
-\usepackage[hmarginratio=1:1]{geometry} % margins with a4, hmargin ratio ensure book page numbers don't mess with margins
-\crefname{enumi}{problem}{problems}
-\renewcommand{\thesection}{\arabic{section}} % Remove the chapter from book sections
-\setlist[enumerate]{leftmargin=!,font={\bfseries}}% global settings, for all lists, removes the margin indent for items, and puts them bold for fun
-\setlist[itemize]{leftmargin=!}% Only the margins here
-\newcommand{\Level}[1]{{\color{blue} $\langle$#1$\rangle$}}
-\title{Sample Problems}
-\author{Easy Theory}
-\date{Last Updated: \today}
+\documentclass[12pt, a4paper]{book}
+\usepackage{amsmath,amsfonts,graphicx,amsthm}
+\usepackage{fullpage}
+\usepackage{algorithmicx}
+\usepackage[ruled]{algorithm}
+\usepackage{algpseudocode}
+\usepackage[dvipsnames]{xcolor}
+
+\usepackage{todonotes}
+\presetkeys{todonotes}{inline}{} % inline todos
+
+\usepackage{tikz} % for automata
+\usetikzlibrary{automata,positioning}
+\usepackage{enumitem}
+%\setlist{nosep} % or \setlist{noitemsep} to leave space around whole list
+\setlist{noitemsep}
+
+% this is for CFGs
+\usepackage{listings}
+\lstset{
+	basicstyle=\itshape,
+	literate={->}{\rightarrow}{1}
+	{=>}{\Rightarrow}{1}
+}
+
+\theoremstyle{plain}
+
+\usepackage{mdframed} % for boxing thingys
+\newmdtheoremenv[
+outerlinewidth=2,leftmargin=40,%
+rightmargin=40,backgroundcolor=yellow,%
+outerlinecolor=blue,innertopmargin=0pt,%
+splittopskip=\topskip,skipbelow=\baselineskip,%
+skipabove=\baselineskip,ntheorem
+]{theorem}{Theorem}
+
+\newmdtheoremenv{definition}{Definition}
+\newmdtheoremenv{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem*{claim*}{Claim}
+
+% Proof environment for induction
+\newenvironment{proofmathinduction}[1][\proofname]
+{
+	\begin{proof}[\textbf{\textup{Proof by Mathematical Induction}} on #1.]$ $\par\nobreak\ignorespaces
+}{%
+	\end{proof}
+}
+
+\newenvironment{proofstructuralinduction}[1][\proofname]
+{
+	\begin{proof}[\textbf{\textup{Proof by Structural Induction}}]$ $\par\nobreak\ignorespaces
+	}{%
+	\end{proof}
+}
+
+\newcommand{\problem}[3]{
+	\textsc{#1}\\
+	\textsc{Instance:} #2\\
+	\textsc{Question:} #3
+}
+
+\setcounter{tocdepth}{0} % only parts and sections
+
+\theoremstyle{definition}
+
+\newcommand{\FA}{\textsf{FA}}
+\newcommand{\DFA}{\textsf{DFA}}
+\newcommand{\NFA}{\textsf{NFA}}
+
+\newcommand{\setofstatesname}{S}
+\newcommand{\startstatename}{s_0}
+\newcommand{\acceptstatesname}{A}
+\newcommand{\transitionfunctionname}{\delta}
+\newcommand{\inputalphabetname}{\Sigma}
+\newcommand{\stackalphabetname}{\Gamma}
+\newcommand{\tapealphabetname}{\Gamma}
+\newcommand{\blanksymbol}{\sqcup}
+
+\newcommand{\Pcomplexity}{\textsf{P}}
+\newcommand{\NP}{\textsf{NP}}
+
+\newcommand{\natnums}{\mathbb{N}}
+\newcommand{\integers}{\mathbb{N}}
+\newcommand{\reals}{\mathbb{R}}
+
+\newcommand{\union}{\cup}
+\newcommand{\concat}{\circ}
+\newcommand{\orop}{|}
+\newcommand{\complement}[1]{\overline{#1}}
+\newcommand{\emptystring}{\varepsilon}
+
+\newcommand{\Epsilon}{\varepsilon}
+
+\newcommand{\powerset}[1]{\mathcal{P}(#1)}
+
+\title{Easy Theory of Computation}
+\author{Ryan E. Dougherty}
+\date{}
+
+\newcommand{\includecontent}[1]{\input{content/#1}}
+
 \begin{document}
+
 \maketitle
-\frontmatter  % comes before main text
-\section*{How to Use these Problems}
-This is a core dump of problems to practice in theory of computation.
-This should give you a good idea of the types of questions that we will ask on an exam.
-This list intentionally includes a few questions that are too long or difficult for exam conditions.
-The list of questions is divided up into 5 difficulties: \Level{1} through \Level{5}, where \Level{3} is the maximum difficulty that we would expect on an exam. They are interpreted to mean as follows:
-\begin{itemize}
-	\item \Level{1}: should be able to solve within 5 minutes.
-	\item \Level{2}: should be able to solve in 10-15 minutes (or at least see the approach that quickly).
-	\item \Level{3}: should be able to solve within 30 minutes (or at least see the approach that quickly).
-	\item \Level{4}: a very hard homework problem, likely taking a few hours.
-	\item \Level{5}: either an open problem, or requires many hours of deep thought.
-\end{itemize}
 
-Try to not solve every single one of these problems. 
-Instead, try to pick a \emph{sample} set of problems that you think would be most beneficial.
-For instance, it would be a terrible idea to only work on \Level{1} problems, or only on \Level{5} problems. 
-
-Discussing solutions to these problems is very beneficial, but \emph{only if} you have made an honest attempt at solving them yourself.
-If you're getting stuck on a particular problem, try to understand \textbf{why} you are getting stuck on those problems, and try to remedy where the approaches are not clear.
-If you're missing points consistently on coursework, try to come back to these problems to see why you are missing them.
-%\framebox[\linewidth][c]{Don't aim for ``understanding'' or ``regurgitating'' the solutions; instead aim for \textbf{\emph{mastery}}.}\par
-\vspace*{\fill} %Sandwich : as much vspace as possible
-\begin{center} % Center the box
-  \fbox{% creates the frame
-  \parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}% An \fbox has the width of its contents plus 2 \fboxsep plus 2 \fboxrule
-  {\centering \Large{Don't aim for ``understanding'' or ``regurgitating'' the solutions; instead aim for \textbf{\emph{mastery}}.}}}
- %Creates the text, centered with centering
-\end{center}
-\vspace*{\fill}%Sandwich : as much vspace as possible
-\clearpage % better than newpage
 \tableofcontents
-\clearpage
-\mainmatter % normal page numbering
-\markboth{\MakeUppercase{problems}}{\MakeUppercase{problems}} % Right header of page 
 
-\include{regular_languages}
+%\part{Introduction}
+%\input{content/introduction}
+%\input{content/recursive_defs}
+%\input{content/structural_induction}
 
-\include{context_free_languages}
+\part{Regular Languages}
+\input{content/dfa}
+\input{content/dfa_minimization}
+%\input{content/reg_closure_ops}
+\input{content/nfa}
+\input{content/powerset}
 
-\include{turing_machines_decidability}
 
-\include{undecidability}
+%\input{content/nonregular_myhillnerode}
+\input{content/nonregular_pumpinglemma}
+%%\input{content/regex}
+%%\input{content/ardens_lemma}
+%
+\part{Context-Free Languages}
+%\input{content/recursive_automata}
+%\input{content/dpda}
+%\input{content/pda}
+\input{content/cfg}
+%\input{content/pump_cfl}
+%\input{content/ogden_lemma}
+%
+%\part{Turing Machines}
+%
+%\input{content/tm}
+%\input{content/tm_variants_computing}
+%\input{content/reduction}
+%\input{content/chomsky_hierarchy}
+%\input{content/universal_tm}
+%
+%\part{Unsolvable Problems}
+\input{content/uncountable}
+\input{content/unsolvable}
+%
+\part{Computational Complexity}
+\input{content/p_np}
 
-\backmatter
 \end{document}

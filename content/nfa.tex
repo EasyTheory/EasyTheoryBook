@@ -1,0 +1,43 @@
+\chapter{Nondeterministic Finite Automata}
+
+\section{Objectives}
+
+\begin{itemize}
+	\item Define nondeterministic finite automata (NFA).
+	\item Define the $\emptystring$-closure of a set of states.
+	\item Design NFA.
+	\item Compute the $\emptystring$-closure of a set of states.
+\end{itemize}
+
+\section{Introduction + Motivation}
+
+\section{Definitions}
+
+A \textit{nondeterministic finite automaton} (\NFA) consists of 5 parts:
+\begin{itemize}
+	\item $\setofstatesname$, a finite set of \textit{states};
+	\item $\startstatename$, a state in $\setofstatesname$ called the \textit{start state};
+	\item $\acceptstatesname$, a subset of $\setofstatesname$ called the \textit{accept states};
+	\item $\inputalphabetname$, a finite set, called the \textit{input alphabet};
+	\item $\transitionfunctionname$, a function from $\setofstatesname \times \left(\inputalphabetname \cup \{\emptystring\}\right)$ to $\powerset{\setofstatesname}$, called the \textit{transition function}.
+\end{itemize}
+
+Notice that the only real difference between an $\NFA$ and a $\DFA$ is the transition function, where:
+\begin{enumerate}
+	\item the input pair is $\setofstatesname \times \left(\inputalphabetname \cup \{\emptystring\}\right)$ for an $\NFA$, and $\setofstatesname \times \inputalphabetname$ for a $\DFA$.
+	\item the output is $\powerset{\setofstatesname}$ for an $\NFA$, and just $\setofstatesname$ for a $\DFA$.
+\end{enumerate}
+
+\section{Examples}
+
+\todo{All strings that contain 10 as a substring}
+
+\section{Closure Under Union, Concatenation, and Star}
+
+\todo{Union/concat/star boxes}
+
+\section{Problems}
+
+\todo{Symmetric difference}
+
+\todo{Number of final states for union/intersection}

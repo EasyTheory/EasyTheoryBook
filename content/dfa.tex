@@ -1,0 +1,96 @@
+\chapter{Finite Automata}
+
+\section{Objectives}
+
+\begin{itemize}
+	\item Define finite automata.
+	\item Interpret (``read'') finite automata that are a language acceptors.
+	\item Design (``write'') finite automata that are a language acceptors.
+	\item Design finite automata to accept the union, intersection, and difference of two languages.
+\end{itemize}
+
+\section{Introduction + Motivation}
+
+\section{Definitions}
+
+\begin{minipage}{.7\linewidth}
+	A \textit{finite automaton} (\FA) consists of 5 parts:
+\begin{itemize}
+	\item $\setofstatesname$, a finite set of \textit{states};
+	\item $\startstatename$, a state in $\setofstatesname$ called the \textit{start state};
+	\item $\acceptstatesname$, a subset of $\setofstatesname$ called the \textit{accept states};
+	\item $\inputalphabetname$, a finite set, called the \textit{input alphabet};
+	\item $\transitionfunctionname$, a function from $\setofstatesname \times \inputalphabetname$ to $\setofstatesname$, called the \textit{transition function}.
+\end{itemize}
+
+\end{minipage}
+\hfill
+\begin{minipage}{.3\linewidth}
+\begin{tikzpicture}[scale=0.7, shorten >=1pt,node distance=2cm,on grid,auto,initial text={},every state/.style={align=center},line width=0.4mm] 
+	\node[state,initial,accepting,inner sep=5pt] (q_0)   {$q_0$}; 
+	\node[state] (q_1) [right=of q_0] {$q_1$}; 
+	\node[state] (q_2) [below=of q_0] {$q_2$}; 
+	\node[state,accepting,inner sep=5pt](q_3) [below=of q_1] {$q_3$};
+	\path[->] 
+	(q_0) edge [loop above] node {$a$} ()
+	edge  [] node {$b$} (q_1)
+	(q_1) edge  [bend right=10, left] node {$a$} (q_2)
+	edge [] node {$b$} (q_3)
+	(q_2) edge [] node {$b$} (q_0) 
+	edge [bend right=10,below] node {$a$} (q_1)
+	(q_3) edge [loop right] node {$b$} () 
+	edge [] node {$a$} (q_2);
+\end{tikzpicture}
+\end{minipage}
+
+A finite automaton is called \textit{deterministic} if the transition function $\transitionfunctionname$ is a \textit{total} function (i.e., every input to $\transitionfunctionname$ has a defined output); we call this a \textit{deterministic finite automaton}, or \DFA.
+
+\subsection{$\DFA$ Computations}
+
+Let $M$ be a $\DFA$, and $w \in \inputalphabetname^\star$. Informally, $M$ accepts $w$ if the state that $M$ goes into on input $w$ is any accept state.
+Formally, let the \textit{computation of $M$ on $w$} is the sequence of states $s_1, s_2, \cdots, s_n, s_{n+1}$ where $w = w_1 \cdots w_n$ with $w_i \in \Sigma$ such that $\delta(s_i, w_i) = s_{i+1}$ for all $1 \le i \le n$.
+Such a computation is \textit{accepting} if $s_{n+1}$ is an accept state (i.e., $s_{n+1} \in \acceptstatesname$).
+
+Note in the definition here we said that $M$'s computation on $w$, implying $M$ has exactly one computation on $w$, but we haven't actually proven this yet; let's do this.
+
+\begin{claim*}
+	Every $\DFA$ $M$ has exactly one computation on any string $w \in \inputalphabetname^\star$, where $\inputalphabetname$ is the input alphabet of $M$.
+\end{claim*}
+
+\begin{proofstructuralinduction}[$|w|$]
+	\item \textbf{Base Case} ($w = \emptystring$): We must show that all elements defined in the basis rules have that $M$ has exactly one computation on them. Thus, we must show that $M$ has exactly one computation on $w = \emptystring$. 
+	
+	Note that $|w| = |\emptystring| = 0$. Since the input has no characters to read, no transitions can be applied. Therefore, the computation of $M$ on $\emptystring$ is $(q_0)$, where $q_0$ is the start state of $M$.
+	Since this is the only possible sequence of states, $M$ has exactly 1 computation on $\emptystring$.
+	
+	\item \textbf{Induction Hypothesis}: Assume any string $w \in \inputalphabetname^\star$ with $|w| \le k$ for some integer $k$ has that $M$ has exactly 1 computation on $w$.
+	
+	\item \textbf{Induction Step ($k+1$)}: We must show that any string of length $k+1$ in $\inputalphabetname^\star$ has this property.
+	Call such a string $w'$. 
+	By definition, $w'$ must be equal to $wa$, where $a \in \inputalphabetname$, and $w \in \inputalphabetname^\star$ with $|w| = k$.
+	By the Induction Hypothesis, $M$ has exactly 1 computation on $w$; call that sequence of states $(q_0, q_1, \cdots, q_k)$.
+	Denote $q_{k+1} = \transitionfunctionname(q_k, a)$, where $\transitionfunctionname$ is the transition function of $M$.
+	This state is defined because $M$ is a $\DFA$, and so the computation of $M$ on $w'$ must include $q_0, \cdots, q_k, q_{k+1}$.
+	Since the transition function $\transitionfunctionname$ is only a function, $q_{k+1}$ is uniquely determined. 
+	Therefore, $M$ has exactly one computation on $w'$; namely, $(q_0, \cdots, q_k, q_{k+1})$.
+	
+	\item \textbf{Conclusion}: Since $M$ has exactly one computation on every string in $\inputalphabetname^\star$, and $M$ is an arbitrary $\DFA$, we have proven that every $\DFA$ has exactly one computation on every string in $\inputalphabetname^\star$.
+\end{proofstructuralinduction}
+
+Note that the Induction Step shows that if $M$ is merely an $\FA$ instead of a $\DFA$, $M$ might not read the whole string $w'$, since $\transitionfunctionname(q_k, a)$ may not be defined.
+This does show that $\FA$s have either \emph{0 or 1} computations on every string.
+
+The \textit{language} of a $\DFA$ $M$, written $L(M)$, is the set of all strings $w \in \inputalphabetname^\star$ that $M$ accepts. Formally,
+\[
+	L(M) = \{ w \in \inputalphabetname^\star : \text{$M$'s computation on $w$ is accepting}\}
+\]
+
+
+
+\section{Examples}
+
+\todo{Unary multiples of n}
+
+\todo{Binary multiples of n}
+
+\section{Problems}

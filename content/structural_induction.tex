@@ -1,0 +1,92 @@
+\chapter{Structural Induction}
+
+\section{Objectives}
+
+\begin{itemize}
+	\item Describe the essential components of a proof by structural induction.
+	\item Prove properties using structural induction.
+\end{itemize}
+
+\section{Introduction + Motivation}
+
+Structural induction is an inductive proof technique that uses the structure (recursive definition or nature) of the elements in a set to prove a property about that set.  The steps to do this are very similar to those used for mathematical induction.
+
+Suppose $L$ is defined recursively and you want to prove that every element $x \in L$ has property $P$.  Then you can prove your claim as done in the following section.
+
+
+\section{Structural Induction}
+
+The general method for proving a statement by structural induction involves the following steps (items that are bolded are different than mathematical induction):
+\begin{enumerate}
+	\item Write down the claim you are trying to prove; be sure to always state the claim!
+	
+	\item Indicate what proof style you are using (which is \textbf{structural} induction in this case).
+	
+	What to write: 
+	\begin{mdframed}[align=center]
+		\textbf{Proof by Structural Induction} (no variables this time)
+	\end{mdframed}
+	
+	\item What is/are the base case(s), followed by a proof of each. 
+	
+	What to write: 
+	\begin{mdframed}[align=center]
+		Base Case 1 $\langle$ \textbf{some element} $\rangle$:\\ $\langle$ proof that this element has property $P$ $\rangle$.\\
+		$\cdots$\\
+		Base Case 1 $\langle$ \textbf{some element} $\rangle$:\\ $\langle$ proof that this element has property $P$ $\rangle$.\\
+	\end{mdframed}
+	
+	\item Induction Hypothesis statement, indicating what you assume about some variable(s).
+	
+	What to write:
+	\begin{mdframed}[align=center]
+		\textbf{Induction Hypothesis}: Assume that $\langle$ \textbf{some variable in the set $L$} $\rangle$ \textbf{has the property $P$}.
+	\end{mdframed}
+	
+	\item Induction Step, \textbf{proving that recursively constructed elements in the rules also have property $P$}
+	
+	What to write:
+	\begin{mdframed}[align=center]
+		Induction Step ($\langle$ \textbf{one recursively defined element} $\rangle$): $\langle$ \textbf{proof that this element also has property $P$} using the Induction Hypothesis \emph{explicitly} $\rangle$.
+	\end{mdframed}
+	
+	\item Concluding statement.
+	
+\end{enumerate}
+
+Let's do an example, using \emph{structural} induction.
+Let $L$ be a subset of $\Sigma = \{a,b\}$ be the language defined as follows:
+\begin{enumerate}
+	\item $\emptystring \in L$.
+	\item For any $x \in L$, $axb \in L$.
+	\item No string is in $L$ unless it can be obtained from rules 1, 2.
+\end{enumerate}
+
+\begin{claim}
+Every element in $L$ is even in length.
+\end{claim}
+
+\begin{proofstructuralinduction}
+
+	\textbf{Base Case} ($\emptystring$): We must show that all elements defined in the basis rules are even in length. Thus, we must show that $\emptystring$ is even in length. Since $|\emptystring| = 0$, and 0 is even, the property holds for the basis.
+	
+	\textbf{Induction Hypothesis}: Assume $x \in L$ is a string that is even in length.
+	
+	\textbf{Induction Step ($axb$)}: We must show that the elements constructed in the recursive rules are even in length.
+	Thus, we must show that $axb$ is even in length.
+	\begin{itemize}
+		\item $|axb| = 1 + |x| + 1 = 2 + |x|$.
+		\item By the induction hypothesis, $|x| = 2k$ for some integer $k$.
+		\item It follows that $|axb| = 2 + 2k$.
+		\item Since $2+2k$ is even, $|axb|$ is even, and the property thus holds for the recursive rules.
+	\end{itemize}
+
+	\item Conclusion: Since every element in $L$ can be constructed using a finite number of applications of rules 1 and 2 and we have proven that rules 1 and 2 maintain the property of even-in-length, all strings in $L$ are even in length.
+	
+\end{proofstructuralinduction}
+
+
+
+\section{Examples}
+
+\section{Problems}

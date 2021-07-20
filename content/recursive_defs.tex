@@ -1,0 +1,167 @@
+\chapter{Recursive Definitions and Proof by Induction}
+
+\section{Objectives}
+
+\begin{itemize}
+	\item Know the terminology and operations of Languages.
+	\item Describe the elements of a recursive definition.
+	\item Define languages recursively.
+	\item Know the basic elements of a proof by induction.
+	\item Prove properties using induction.
+\end{itemize}
+
+\section{Introduction + Motivation}
+
+Many structures we will analyze in this course have a ``simple'' structure, in that they are one of a small number of possibilities. 
+Many functions you may have come across have such a simple structure; here are a few:
+%\[
+%	fib(n) = \begin{cases}
+%		1 & \text{if $n = 0, 1$}\\
+%		fib(n-1) + fib(n-2) & \text{if $n > 1$}
+%	\end{cases}
+%\]
+The ``fibonacci'' function $fib: \natnums \to \natnums$ defined by:
+\[
+fib(n) = 
+\begin{cases}
+	1 & \text{if $n=0, 1$}\\
+	fib(n-1) + fib(n-2) & \text{if $n > 1$}
+\end{cases}
+\]
+
+The ``factorial'' function $!: \natnums \to \natnums$ defined by:
+\[
+n! = 
+\begin{cases}
+	1 & \text{if $n=0$}\\
+	n \times (n-1)! & \text{if $n > 1$}
+\end{cases}
+\]
+
+``Reversing'' a single string $reverse: \Sigma^\star \to \Sigma^\star$ defined by:
+\[
+reverse(s) = 
+\begin{cases}
+	s & \text{if $|s| \le 1$}\\
+	s(n) \concat reverse(s(1..(n-1))) & \text{otherwise}
+\end{cases}
+\]
+where $s$ is a string of length $n$, and $s(i..j)$ represents the substring from index $i$ to $j$.
+
+\section{Recursive Definitions}
+
+Note that in all of the examples above, they all have the same essential ``structure'':
+\begin{itemize}
+	\item One or more \emph{basis parts} that define a finite number of elements in the set.
+	\item One or more \emph{recursive parts} that produce new elements in the set, given known existing elements.
+	\item A \emph{closure} statement that removes any ambiguity of other elements potentially being in the set.\footnote{In the examples given earlier, the domain/codomain of the function implicitly give the necessary closure statement.}
+\end{itemize}
+
+\section{Mathematical Induction Review}
+
+The general method for proving a statement by induction involves the following steps:
+\begin{enumerate}
+	\item Write down the claim you are trying to prove; be sure to always state the claim!
+	
+	What to write: 
+	\begin{mdframed}[align=center]
+		\textbf{Claim: $\langle$ write the actual formal statement of the claim here $\rangle$}
+	\end{mdframed}
+
+	\item Indicate what proof style you are using (which is induction in this case).
+	
+	What to write: 
+	\begin{mdframed}[align=center]
+		\textbf{Proof by Induction on $\langle$ some variable(s) here $\rangle$}
+	\end{mdframed}
+
+	\item What is/are the base case(s), followed by a proof of each. 
+	
+	What to write: 
+	\begin{mdframed}[align=center]
+		\textbf{Base Case 1 $\langle$ set the variable(s) to the first base case value(s) $\rangle$}:\\ $\langle$ proof that the claim holds for this first base case $\rangle$.\\
+		$\cdots$\\
+		\textbf{Base Case $m$ $\langle$ set the variable(s) to the $m$th base case value(s) $\rangle$}: \\$\langle$ proof that the claim holds for this $m$th base case $\rangle$.
+	\end{mdframed}
+	
+	\item Induction Hypothesis statement, indicating what you assume about some variable(s).
+	
+	What to write:
+	\begin{mdframed}[align=center]
+		\textbf{Induction Hypothesis}: Assume that for $\langle$ variable + domain excluding base case(s) $\rangle$ that the claim is correct.
+	\end{mdframed}
+
+	\item Induction Step, which is the next ``largest'' value for the variable(s) indicated in the Induction Hypothesis statement.
+	
+	What to write:
+	\begin{mdframed}[align=center]
+		\textbf{Induction Step ($\langle$ next largest domain for the variable(s) $\rangle$)}: $\langle$ proof that the claim is true in this case using the Induction Hypothesis \emph{explicitly} $\rangle$.
+	\end{mdframed}
+
+	\item Concluding statement.
+	
+	What to write:
+	\begin{mdframed}[align=center]
+		\textbf{Conclusion}: By the principle of $\langle$ the type of induction used $\rangle$ induction, it follows that $\langle$ restate the claim here $\rangle$.
+	\end{mdframed}
+	
+\end{enumerate}
+
+Let's do an example, using \emph{mathematical} induction. The function $n!$ is strictly larger than $2^n$ for all integers $n \ge 4$.
+
+\begin{claim*}
+	$n! > 2^n$ for all $n \ge 4$.
+\end{claim*}
+
+\begin{proofmathinduction}[$n \ge 4$]
+
+	\textbf{Base Case $(n = 4)$}: We must show that $4! > 2^4$. By definition of factorial, $4! = 4 \cdot 3 \cdot 2 \cdot 1 = 24$, and $2^4 = 16$. Since $24 > 16$, this claim holds for this base case.
+	
+	\textbf{Induction Hypothesis}: Assume that for \emph{some}\footnote{Note this says \emph{some} and not \emph{all}. If we said \emph{all}, we would be assuming the claim to be true before proving it!} $n \ge 4$, $n! > 2^n$.
+	
+	\textbf{Induction Step $(n + 1)$}: We must show that $(n+1)! > 2^{n+1}$. Starting with the left-hand side,\footnote{We must only manipulate one side of the equation in order to prove this. You are \textbf{not} allowed to manipulate both sides of the equation at the same time!}
+	\begin{alignat*}{3}
+		&(n+1)! &&= (n+1) \cdot n! \quad && \text{By Definition of Factorial} \\
+		& 		&&> (n+1) \cdot 2^n \quad&& \text{By the Induction Hypothesis} \\
+		& 		&&> 2 \cdot 2^n \quad&& \text{Since $n \ge 4$} \\
+		&		&&= 2^{n+1} \quad&& \text{By Definition of $2^{n+1}$}
+ 	\end{alignat*}
+ 	It follows that $(n+1)! > 2^{n+1}$, which is what we wanted to prove.
+ 	
+ 	\textbf{Conclusion}: By the principle of mathematical induction, it follows that $n! > 2^n$ for all $n \ge 4$.
+\end{proofmathinduction}
+
+\section{Problems}
+
+\begin{enumerate}
+	\item (AY15-1 WPR Question) Give a recursive definition for each of the following sets.
+	\begin{enumerate}
+		\item The set $W$ of all strings of the form $1^i 0^k$ where $i \ge 2k$.
+		\item The set $X$ of all strings in $\{0,1\}^\star$ containing the substring 00.
+		\item The set $Y$ of all strings over $\Sigma = \{0,1\}$ that contain more 0s than 1s.
+	\end{enumerate}
+
+	\item (AY16-2 WPR Question) Give a recursive definition for each of the following sets.
+	\begin{enumerate}
+		\item The set $B$ of all strings in $\{0,1\}^\star$ containing the substring 101101.
+		\item The set $C$ of all strings of rhe form $1^x 01^j$, where $j \le x \le 2j$. 
+	\end{enumerate}
+	
+	\item Let $f(0) = 1, f(n) = 2f(n-1)+1$ for all $n > 0$.
+	Prove by induction that for any $n \ge 0$, $f(n) = 2^{n+1} - 1$.
+	
+	\item Prove using mathematical induction that for every $n \in \natnums$,
+	\[
+		1 + \sum_{i=1}^{n} i \times i! = (n+1)!.
+	\]
+	
+	\item Let $f_i$ be the $i$th Fibonacci number (i.e., $f_0 = 0, f_1 = 1$, and for $n \ge 2$, $f_n = f_{n-1} + f_{n-2}$).
+	Prove by mathematical induction that:
+	\[
+		\sum_{i=1}^{n} f_i = f_{n+2} - 1.
+	\]
+	
+	\item Suppose $x$ is any real number greater than $-1$. Prove using mathematical induction that for every nonnegative integer $n$, $(1+x)^n\ge1+nx$. (Be sure you say in your proof exactly how you use the assumption that $x>-1$.
+	
+	\todo{Add other exercises}
+\end{enumerate}

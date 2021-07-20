@@ -1,0 +1,57 @@
+\chapter{Closure Operations for Regular Languages}
+
+\section{Introduction + Motivation}
+
+\section{Definitions}
+
+\todo{Definition for closure in general under some operation}
+Let $\mathcal{L}$ be a collection of languages, and $\oplus$ be some operation on languages. 
+We say that \textit{$\mathcal{L}$ is closed under $\oplus$} if applying $\oplus$ to languages $L_1, \cdots L_k \in \mathcal{L}$ results in a language $L'$ that is also in $\mathcal{L}$.
+
+For example, let $\mathcal{F}$ be the set of finite languages over the alphabet $\{0,1\}$. Then $\mathcal{F}$ is closed under union of two languages because the union of any two finite languages is also finite.
+They are also closed under intersection for analogous reasons.
+
+However, $\mathcal{F}$ is \textit{not} closed under complement, because the complement of a finite language over the alphabet $\{0,1\}$ is not finite. 
+For example, the complement of the finite language $\{0, 10\}$ is the set $\{\Epsilon, 1, 00, 01, 11, 000, \cdots\}$, which has infinitely many strings.
+
+\section{Closure Under Complement}
+
+\begin{theorem}
+	Regular languages are closed under complement.
+\end{theorem}
+
+\begin{proof}
+	It suffices to show that for each regular language $L$, there is a \DFA for $\complement{L}$.
+	Let $M$ be any \DFA for $L$. For any string $w$ that $M$ accepts, the computation of $M$ on $w$ ends in some accept state; and for any string $x$ that $M$ does \textit{not} accept, that computation ends in some non-accept state.
+	
+	We can create a \DFA $\complement{M}$ for $\complement{L}$ by swapping the accept and non-accept states of $M$.
+	\todo{Figure demonstrating the conversion.}
+	Therefore, any computation that ends in an accept state of $\complement{M}$ ended in a non-accept state of $M$, and vice versa. 
+\end{proof}
+
+\section{Closure Under Union and Intersection}
+
+\begin{theorem}
+	Regular languages are closed under union.
+\end{theorem}
+
+\todo{Figure for the product construction}
+
+\begin{corollary}
+	Regular languages are closed under intersection.
+\end{corollary}
+
+\begin{proof}
+	For any two languages $L_1, L_2$, it is the case that
+	\[
+		L_1 \cap L_2 = \complement{\complement{L_1} \union \complement{L_2}},
+	\]
+	known as DeMorgan's Law. 
+	Since we have shown that regular languages are closed under union and complement, they must be closed under intersection as well.
+\end{proof}
+
+\section{Problems}
+
+\todo{Symmetric difference}
+
+\todo{Number of final states for union/intersection}
