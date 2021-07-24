@@ -1,10 +1,11 @@
-\documentclass[12pt, a4paper]{book}
-\usepackage{amsmath,amsfonts,graphicx,amsthm}
-\usepackage{fullpage}
+\documentclass[12pt,american,final, a4paper]{memoir}
+\usepackage{mathtools,amssymb}
+\usepackage{geometry}
 \usepackage{algorithmicx}
 \usepackage[ruled]{algorithm}
 \usepackage{algpseudocode}
 \usepackage[dvipsnames]{xcolor}
+\usepackage[amsmath,hyperref,thmmarks]{ntheorem}
 
 \usepackage{todonotes}
 \presetkeys{todonotes}{inline}{} % inline todos
@@ -37,8 +38,9 @@ skipabove=\baselineskip,ntheorem
 \newmdtheoremenv{definition}{Definition}
 \newmdtheoremenv{corollary}{Corollary}
 \newtheorem{claim}{Claim}
-\newtheorem*{claim*}{Claim}
-
+\theoremstyle{nonumberplain}
+\theorembodyfont{\upshape}
+\newtheorem{proof}{Proof}
 % Proof environment for induction
 \newenvironment{proofmathinduction}[1][\proofname]
 {
@@ -59,10 +61,6 @@ skipabove=\baselineskip,ntheorem
 	\textsc{Instance:} #2\\
 	\textsc{Question:} #3
 }
-
-\setcounter{tocdepth}{0} % only parts and sections
-
-\theoremstyle{definition}
 
 \newcommand{\FA}{\textsf{FA}}
 \newcommand{\DFA}{\textsf{DFA}}
@@ -87,7 +85,7 @@ skipabove=\baselineskip,ntheorem
 \newcommand{\union}{\cup}
 \newcommand{\concat}{\circ}
 \newcommand{\orop}{|}
-\newcommand{\complement}[1]{\overline{#1}}
+\renewcommand{\complement}[1]{\overline{#1}}
 \newcommand{\emptystring}{\varepsilon}
 
 \newcommand{\Epsilon}{\varepsilon}
@@ -99,13 +97,107 @@ skipabove=\baselineskip,ntheorem
 \date{}
 
 \newcommand{\includecontent}[1]{\input{content/#1}}
+\usepackage{csquotes}
+\usepackage[english]{babel}
+\usepackage{enumitem}
+\usepackage{blindtext}
+\usepackage[T1]{fontenc}
+\usepackage[babel,final,tracking=true,kerning=true,spacing=true,activate={true,nocompatibility}]{microtype}
+\usepackage{graphicx}
+\usepackage[all]{nowidow}  % avoids widow lines at all costs
+\doublehyphendemerits=100000 % and hyphens on successive lines
+\usepackage{xcolor}
+\usepackage{newpxtext,textcomp}
+\usepackage{eulerpx}
+\usepackage[bb=boondox,scr=boondoxupr]{mathalpha}
+\makeatletter
+\let\afhead\@afterheading
+\makeatother
+\DeclareSymbolFont{zeussymbols}{U}{zeus}{m}{n}
+\DeclareMathAccent{\hat}{\mathalpha}{zeussymbols}{222}%euler hat accent as in eulervm
+\usepackage[type1]{cabin}
+\usepackage[varqu,varl]{inconsolata}
+\usepackage[amsmath,hyperref,thmmarks]{ntheorem}
+\usepackage[backend=biber,style=alphabetic]{biblatex}
+\addbibresource{sample.bib}
+\usepackage{booktabs}
+\usepackage{xparse}
+\usepackage{etoc}
+\usepackage{blindtext}
+\usepackage{geometry}
+\usepackage{float}
 
+\usepackage[section]{placeins}
+% Force floats in right section.
+\makeatletter
+\AtBeginDocument{%
+  \expandafter\renewcommand\expandafter\subsection\expandafter{%
+    \expandafter\@fb@secFB\subsection
+  }%
+}
+\makeatother%
+%\chapterstyle{bianchi}
+%\chapterstyle{ger}
+\chapterstyle{ell}
+\cftsetindents{part}{0em}{1.65em} % accommodate for part numbers (add some space)
+\let\originalchapter\chapter%
+\RenewDocumentCommand{\chapter}{som}{%
+  \IfBooleanTF{#1}
+    {\originalchapter*{#3}}
+    {\IfNoValueTF{#2}
+      {\originalchapter{#3}}
+      {\originalchapter[#2]{#3}}%
+    }% Manage chapter like normal command
+\etocchecksemptiness% Check if ToC is empty if so, do nothing
+\etocsettocstyle{% style before the chapter's ToC
+\microtypesetup{protrusion=false}% Disable microtype for ToCs
+\noindent\hrulefill\large\bfseries% Traces the line before Contents
+\kern2ptContents\kern2pt\hrulefill% Spaces & line after Contents
+\vspace{0.5\onelineskip}% Space below the top line
+}
+{%style after the chapter's ToC
+\noindent\hrulefill% Trace the line below ToC
+\par\nobreak\addvspace{\aftersecskip}% Add spaces if needed
+\afhead% Warn TeX engine we are after a heading (without effect if ToC empty, duplicate)
+\microtypesetup{protrusion=false}% Re-enable microtype
+}
+}
+\etocsetnexttocdepth{subsection} % chapters, sections, and subsections are numbered
+\etocsettocdepth{subsection} % chapters, sections, and subsections are in the Table of Contents
+\usepackage[pdfencoding=auto,pdfborderstyle={/S/U/W 1}]{hyperref} % Clickable references.
+
+\usepackage[all]{hypcap} % Anchors links to the beginning of their respective floats. Load after hyperref.
+
+\usepackage[noabbrev,nameinlink]{cleveref} % Names references automatically. Load after hyperref.
+\hypersetup{pdfprintscaling=None}
+
+
+%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%
+
+\setlrmarginsandblock{0.15\paperwidth}{*}{1} % Left and right margin
+\setulmarginsandblock{0.15\paperwidth}{*}{1}  % Upper and lower margin
+\setheaderspaces{*}{*}{1}
+
+\checkandfixthelayout
+ \pretitle{\vspace{0.1\paperwidth}\begin{center}\Huge\bfseries}
+ \posttitle{\par\vfill\end{center}}
+\predate{\vfill\begin{center}\large}
+\showboxdepth=\maxdimen
+\showboxbreadth=\maxdimen
 \begin{document}
 
+\hypersetup{pageanchor=false}% don't try to anchor on unnumbered pages & roman numbers
+\begin{titlingpage}
+\sffamily
 \maketitle
-
+\end{titlingpage}
+\frontmatter
+%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%---%%%
+%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%
+\microtypesetup{protrusion=false}% protrusion may lead to  leaders dots issues in TOCs. Disabling it for now
 \tableofcontents
-
+\microtypesetup{protrusion=true}
+\mainmatter\hypersetup{pageanchor=true}%
 %\part{Introduction}
 %\input{content/introduction}
 %\input{content/recursive_defs}
