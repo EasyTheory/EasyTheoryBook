@@ -83,8 +83,12 @@ skipabove=\baselineskip,ntheorem
 \newmdtheoremenv{definition}{Definition}
 \newmdtheoremenv{corollary}{Corollary}
 \newtheorem{claim}{Claim}
-\theoremstyle{nonumberplain}
 \theorembodyfont{\upshape}
+\theoremheaderfont{\scshape\bfseries}
+\newtheorem{prob}{Problem}
+\crefname{prob}{problem}{problems}
+\Crefname{prob}{Problem}{Problems}
+\theoremstyle{nonumberplain}
 \newtheorem{proof}{Proof}
 % Proof environment for induction
 \newenvironment{proofmathinduction}[1][\proofname]
