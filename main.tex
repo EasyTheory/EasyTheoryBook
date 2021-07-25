@@ -1,18 +1,63 @@
 \documentclass[12pt,american,final, a4paper]{memoir}
-\usepackage{mathtools,amssymb}
+\usepackage{csquotes}
+\usepackage{babel}
+\usepackage{enumitem}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{xparse}
+\makeatletter
+\let\afhead\@afterheading% For use with etoc
+\makeatother
+\usepackage{etoc}
+\usepackage{float}
+\usepackage[T1]{fontenc}
+\usepackage[babel,final,tracking=true,kerning=true,spacing=true,activate={true,nocompatibility}]{microtype}
+\usepackage{graphicx}
+\usepackage[all]{nowidow}  % avoids widow lines at all costs
+\doublehyphendemerits=100000 % and hyphens on successive lines
+\usepackage{newpxtext,textcomp}
+\usepackage{eulerpx}
+\usepackage[bb=boondox,scr=boondoxupr]{mathalpha}
+\DeclareSymbolFont{zeussymbols}{U}{zeus}{m}{n}
+\DeclareMathAccent{\hat}{\mathalpha}{zeussymbols}{222}%euler hat accent as in eulervm
+\usepackage[type1]{cabin}
+\usepackage[varqu,varl]{inconsolata}
+\usepackage[backend=biber,style=alphabetic]{biblatex}
+\addbibresource{sample.bib}
+\usepackage[hypcap=true]{caption} % Anchors links to the beginning of their respective floats. Load after hyperref.
+\usepackage[pdfencoding=auto,pdfborderstyle={/S/U/W 1}]{hyperref} % Clickable references.
+\usepackage[noabbrev,nameinlink]{cleveref} % Names references automatically. Load after hyperref.
+\usepackage{nameref}
+\hypersetup{pdfprintscaling=None}
+\usepackage[section]{placeins}
+\makeatletter
+\AtBeginDocument{%
+  \expandafter\renewcommand\expandafter\subsection\expandafter{%
+    \expandafter\@fb@secFB\subsection
+  }%
+}
+\makeatother%
+\usepackage{mathtools}
 \usepackage{geometry}
 \usepackage{algorithmicx}
 \usepackage[ruled]{algorithm}
 \usepackage{algpseudocode}
-\usepackage[dvipsnames]{xcolor}
+%\usepackage[dvipsnames]{xcolor}
 \usepackage[amsmath,hyperref,thmmarks]{ntheorem}
-
+\usepackage{thmtools}
 \usepackage{todonotes}
 \presetkeys{todonotes}{inline}{} % inline todos
+\ExplSyntaxOn
+\DeclareExpandableDocumentCommand{\IfNoValueOrEmptyTF}{mmm}
+ {
+  \IfNoValueTF{#1}{#2}
+   {
+    \tl_if_empty:nTF {#1} {#2} {#3}
+   }
+ }
+\ExplSyntaxOff
 
-\usepackage{tikz} % for automata
 \usetikzlibrary{automata,positioning}
-\usepackage{enumitem}
 %\setlist{nosep} % or \setlist{noitemsep} to leave space around whole list
 \setlist{noitemsep}
 
@@ -56,10 +101,13 @@ skipabove=\baselineskip,ntheorem
 	\end{proof}
 }
 
-\newcommand{\problem}[3]{
-	\textsc{#1}\\
-	\textsc{Instance:} #2\\
-	\textsc{Question:} #3
+\NewDocumentCommand{\problem}{ommm}{%
+  \IfNoValueOrEmptyTF{#1}{\begin{prob}[#2]\quitvmode}{\begin{prob}[#1]{\scshape\bfseries#2}\label{prob:#1}}
+  \begin{itemize}
+	\item[\textsc{Instance:}] #3
+	\item[\textsc{Question:}] #4
+  \end{itemize}
+  \end{prob}
 }
 
 \newcommand{\FA}{\textsf{FA}}
@@ -92,50 +140,8 @@ skipabove=\baselineskip,ntheorem
 
 \newcommand{\powerset}[1]{\mathcal{P}(#1)}
 
-\title{Easy Theory of Computation}
-\author{Ryan E. Dougherty}
-\date{}
-
 \newcommand{\includecontent}[1]{\input{content/#1}}
-\usepackage{csquotes}
-\usepackage[english]{babel}
-\usepackage{enumitem}
-\usepackage{blindtext}
-\usepackage[T1]{fontenc}
-\usepackage[babel,final,tracking=true,kerning=true,spacing=true,activate={true,nocompatibility}]{microtype}
-\usepackage{graphicx}
-\usepackage[all]{nowidow}  % avoids widow lines at all costs
-\doublehyphendemerits=100000 % and hyphens on successive lines
-\usepackage{xcolor}
-\usepackage{newpxtext,textcomp}
-\usepackage{eulerpx}
-\usepackage[bb=boondox,scr=boondoxupr]{mathalpha}
-\makeatletter
-\let\afhead\@afterheading
-\makeatother
-\DeclareSymbolFont{zeussymbols}{U}{zeus}{m}{n}
-\DeclareMathAccent{\hat}{\mathalpha}{zeussymbols}{222}%euler hat accent as in eulervm
-\usepackage[type1]{cabin}
-\usepackage[varqu,varl]{inconsolata}
-\usepackage[amsmath,hyperref,thmmarks]{ntheorem}
-\usepackage[backend=biber,style=alphabetic]{biblatex}
-\addbibresource{sample.bib}
-\usepackage{booktabs}
-\usepackage{xparse}
-\usepackage{etoc}
-\usepackage{blindtext}
-\usepackage{geometry}
-\usepackage{float}
-
-\usepackage[section]{placeins}
 % Force floats in right section.
-\makeatletter
-\AtBeginDocument{%
-  \expandafter\renewcommand\expandafter\subsection\expandafter{%
-    \expandafter\@fb@secFB\subsection
-  }%
-}
-\makeatother%
 %\chapterstyle{bianchi}
 %\chapterstyle{ger}
 \chapterstyle{ell}
@@ -161,16 +167,8 @@ skipabove=\baselineskip,ntheorem
 \afhead% Warn TeX engine we are after a heading (without effect if ToC empty, duplicate)
 \microtypesetup{protrusion=false}% Re-enable microtype
 }
-}
-\etocsetnexttocdepth{subsection} % chapters, sections, and subsections are numbered
+\localtableofcontents\afhead\microtypesetup{protrusion=true}}% print the local ToC and setup like @afterheading
 \etocsettocdepth{subsection} % chapters, sections, and subsections are in the Table of Contents
-\usepackage[pdfencoding=auto,pdfborderstyle={/S/U/W 1}]{hyperref} % Clickable references.
-
-\usepackage[all]{hypcap} % Anchors links to the beginning of their respective floats. Load after hyperref.
-
-\usepackage[noabbrev,nameinlink]{cleveref} % Names references automatically. Load after hyperref.
-\hypersetup{pdfprintscaling=None}
-
 
 %%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%
 
@@ -184,6 +182,12 @@ skipabove=\baselineskip,ntheorem
 \predate{\vfill\begin{center}\large}
 \showboxdepth=\maxdimen
 \showboxbreadth=\maxdimen
+
+\title{Easy Theory of Computation}
+\author{Ryan E. Dougherty}
+\date{}
+
+
 \begin{document}
 
 \hypersetup{pageanchor=false}% don't try to anchor on unnumbered pages & roman numbers
@@ -202,7 +206,6 @@ skipabove=\baselineskip,ntheorem
 %\input{content/introduction}
 %\input{content/recursive_defs}
 %\input{content/structural_induction}
-
 \part{Regular Languages}
 \input{content/dfa}
 \input{content/dfa_minimization}
