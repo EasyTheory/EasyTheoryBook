@@ -12,27 +12,39 @@ We want to minimize the size of a finite automaton as much as possible, \emph{as
 
 \section{Minimization}
 
-Think about the following two states:
+Think about the  states $s_{0}$ \& $s_{1}$ in the following automaton:
 
-\todo{fix the transition labels and state names}
-\begin{tikzpicture}[scale=0.7, shorten >=1pt,node distance=5cm,on grid,auto,initial text={},every state/.style={align=center},line width=0.4mm] 
-	\node[state] (q_0)   {$q_0$}; 
-	\node[state] (q_1) [below=of q_0] {$q_1$}; 
-	\node[state] (q_2) [right=of q_0] {$q_2$}; 
-	\node[state] (q_3) [below=of q_2] {$q_3$}; 
+%\todo{fix the transition labels and state names}
+\begin{figure}[H]
+  \centering
+\begin{tikzpicture}[scale=0.7, shorten >=1pt,node distance=5cm,on grid,auto,initial text={},every state/.style={align=center},line width=0.4mm]
+  \node[state,initial] (q_0)   {$s_0$};
+	\node[state] (q_1) [below=of q_0] {$s_1$};
+	\node[state] (q_2) [right=of q_0] {$s_2$};
+	\node[state] (q_3) [below=of q_2,accepting] {$s_3$};
 	\path[->] 
 	(q_0) edge node {$a$} (q_2)
-	(q_0) edge node {$b$} (q_3)
-	(q_1) edge node {$a$} (q_2)
+	(q_0) edge[above,sloped,pos=0.65] node {$b$} (q_3)
+	(q_1) edge[above,sloped,pos=0.35] node {$a$} (q_2)
 	(q_1) edge node {$b$} (q_3)
 	;
 \end{tikzpicture}
-
+\end{figure}
 Clearly these two states ``do the same thing,'' since their transitions go to identically the same states, given the same input from both.
 Here, we can just merge the two states together:
 
-\todo{Same example, one state on the left with the name containing the original two}
-
+\begin{figure}[H]
+  \centering
+\begin{tikzpicture}[scale=0.7, shorten >=1pt,node distance=5cm,on grid,auto,initial text={},every state/.style={align=center},line width=0.4mm]
+  \node[state,initial] (q_0)   {$s_0,s_{1}$};
+	\node[state] (q_2) [right=of q_0] {$s_2$};
+	\node[state] (q_3) [below=of q_2,accepting] {$s_3$};
+	\path[->]
+	(q_0) edge node {$a$} (q_2)
+	(q_0) edge[above,sloped,pos=0.65] node {$b$} (q_3)
+	;
+\end{tikzpicture}
+\end{figure}
 However, it may be more complicated to  figure out, say, this example of what states are the ``same'':
 
 \todo{Bigger example}
