@@ -13,20 +13,19 @@
 
 \section{Definitions}
 
-\begin{minipage}{.7\linewidth}
+\begin{definition}
 	A \textit{finite automaton} (\FA) consists of 5 parts:
-\begin{itemize}
-	\item $\setofstatesname$, a finite set of \textit{states};
-	\item $\startstatename$, a state in $\setofstatesname$ called the \textit{start state};
-	\item $\acceptstatesname$, a subset of $\setofstatesname$ called the \textit{accept states};
-	\item $\inputalphabetname$, a finite set, called the \textit{input alphabet};
-	\item $\transitionfunctionname$, a function from $\setofstatesname \times \inputalphabetname$ to $\setofstatesname$, called the \textit{transition function}.
-\end{itemize}
+	\begin{itemize}
+		\item $\setofstatesname$, a finite set of \textit{states};
+		\item $\startstatename$, a state in $\setofstatesname$ called the \textit{start state};
+		\item $\acceptstatesname$, a subset of $\setofstatesname$ called the \textit{accept states};
+		\item $\inputalphabetname$, a finite set, called the \textit{input alphabet};
+		\item $\transitionfunctionname$, a function from $\setofstatesname \times \inputalphabetname$ to $\setofstatesname$, called the \textit{transition function}.
+	\end{itemize}
 
-\end{minipage}
 \hfill
 \begin{minipage}{.3\linewidth}
-\begin{tikzpicture}[scale=0.7, shorten >=1pt,node distance=2cm,on grid,auto,initial text={},every state/.style={align=center},line width=0.4mm] 
+	\begin{tikzpicture}[scale=0.7, shorten >=1pt,node distance=2cm,on grid,auto,initial text={},every state/.style={align=center},line width=0.4mm] 
 	\node[state,initial,accepting,inner sep=5pt] (q_0)   {$q_0$}; 
 	\node[state] (q_1) [right=of q_0] {$q_1$}; 
 	\node[state] (q_2) [below=of q_0] {$q_2$}; 
@@ -40,10 +39,14 @@
 	edge [bend right=10,below] node {$a$} (q_1)
 	(q_3) edge [loop right] node {$b$} () 
 	edge [] node {$a$} (q_2);
-\end{tikzpicture}
+	\end{tikzpicture}
 \end{minipage}
+\end{definition}
 
+\begin{definition}
 A finite automaton is called \textit{deterministic} if the transition function $\transitionfunctionname$ is a \textit{total} function (i.e., every input to $\transitionfunctionname$ has a defined output); we call this a \textit{deterministic finite automaton}, or \DFA.
+\end{definition}
+
 
 \subsection{$\DFA$ Computations}
 

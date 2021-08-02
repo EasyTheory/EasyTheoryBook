@@ -29,6 +29,43 @@ Suppose we have the following NFA:
 
 \section{The ``Powerset'' Construction (NFA $\to$ DFA)}
 
+\begin{theorem}
+	Every $\NFA$ has an equivalent $\DFA$ for the same language.
+\end{theorem}
 
+\begin{proof}
+	Let $N = \nfatuple$ be an arbitrary $\NFA$.
+	Then we create an equivalent $\DFA$ $D$ for the language of $N$ as follows\footnote{Both machines have the same alphabet.}:
+	\begin{itemize}
+		\item the states of $D$ correspond to subsets of states in $N$;
+		\item the start state of $D$, $\startstatename'$, is the $\emptystring$-closure of $N$'s start state;
+		\item the accept states of $D$ are the subsets of $N$'s states that have at least one accept state in $N$;
+		\item the transition function $\transitionfunctionname'$ is defined as:
+		\[
+			\transitionfunctionname'(\arbitrarysubsetofstatesname, a) = E(\union_{x \in \arbitrarysubsetofstatesname} \transitionfunctionname(x, a)).
+		\]
+	\end{itemize}
+
+We prove that the languages of $D$ and $N$ are the same, by showing that each language is a subset of the other.
+
+$\Rightarrow$ ($L(D) \subseteq L(N)$): let $x \in L(D)$; we want to show $x \in L(N)$.
+Because $x \in L(D)$, there is a computation of $x$ in $D$:
+\[
+	\startstatename' \xrightarrow{x_1} \cdots \xrightarrow{x_n} f
+\]
+where $f$ is an accept state of $D$.
+Each of the states in this computation corresponds to a subset of $N$'s states; since $f$ is an accept state of $D$, this implies that the subset it corresponds to in $N$ contains an accept state. 
+Since $N$ is an $\NFA$, this implies that there is an accepting computation of $x$ in $N$, implying $x \in L(N)$.
+
+$\Leftarrow$ ($L(N) \subseteq L(D)$): let $x \in L(N)$; we want to show $x \in L(D)$.
+Because $x \in L(N)$, there is a computation of $x$ in $N$:
+\[
+	\startstatename \xrightarrow{x_1} \cdots \xrightarrow{x_n} f,
+\]
+where $f$ is an accept state of $N$.
+Consider the computation of $x$ in $D$; 
+\todo{Prove via induction?}
+
+\end{proof}
 
 \section{Problems}
