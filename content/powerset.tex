@@ -19,7 +19,12 @@ Suppose we have the following NFA:
 \subsection{$\emptystring$-Closure}
 
 \begin{definition}
-	Let $N = (\setofstatesname, \inputalphabetname, \transitionfunctionname, \startstatename, \acceptstatesname)$
+	Let $N = \nfatuple$ be an $\NFA$, and let $\arbitrarysubsetofstatesname \subseteq \setofstatesname$.
+	Then the \emph{$\emptystring$-closure of $\arbitrarysubsetofstatesname$} is the smallest subset of states such that:
+	\begin{enumerate}
+		\item contains $\arbitrarysubsetofstatesname$;
+		\item for any state $s \in \arbitrarysubsetofstatesname$, if $\transitionfunctionname(s, \emptystring) = s'$, then $s' \in \arbitrarysubsetofstatesname$.
+	\end{enumerate}
 \end{definition}
 
 \section{The ``Powerset'' Construction (NFA $\to$ DFA)}
