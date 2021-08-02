@@ -16,10 +16,9 @@
 \usepackage[all]{nowidow}  % avoids widow lines at all costs
 \doublehyphendemerits=100000 % and hyphens on successive lines
 \usepackage{newpxtext,textcomp}
-\usepackage{eulerpx}
-\usepackage[bb=boondox,scr=boondoxupr]{mathalpha}
-\DeclareSymbolFont{zeussymbols}{U}{zeus}{m}{n}
-\DeclareMathAccent{\hat}{\mathalpha}{zeussymbols}{222}%euler hat accent as in eulervm
+\usepackage{mathtools,amssymb}
+\usepackage[euler-hat-accent]{eulervm}
+\usepackage[cal=euler,frak=euler,bb=boondox,scr=boondoxupr]{mathalpha}
 \usepackage[type1]{cabin}
 \usepackage[varqu,varl]{inconsolata}
 \usepackage[backend=biber,style=alphabetic]{biblatex}
@@ -37,7 +36,6 @@
   }%
 }
 \makeatother%
-\usepackage{mathtools}
 \usepackage{geometry}
 \usepackage{algorithmicx}
 \usepackage[ruled]{algorithm}
