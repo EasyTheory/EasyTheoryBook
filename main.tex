@@ -17,9 +17,9 @@
 \doublehyphendemerits=100000 % and hyphens on successive lines
 \usepackage{newpxtext,textcomp}
 \usepackage{eulerpx}
-\usepackage[bb=boondox,scr=boondoxupr]{mathalpha}
-\DeclareSymbolFont{zeussymbols}{U}{zeus}{m}{n}
-\DeclareMathAccent{\hat}{\mathalpha}{zeussymbols}{222}%euler hat accent as in eulervm
+%\usepackage[bb=boondox,scr=boondoxupr]{mathalpha}
+%\DeclareSymbolFont{zeussymbols}{U}{zeus}{m}{n}
+%\DeclareMathAccent{\hat}{\mathalpha}{zeussymbols}{222}%euler hat accent as in eulervm
 \usepackage[type1]{cabin}
 \usepackage[varqu,varl]{inconsolata}
 \usepackage[backend=biber,style=alphabetic]{biblatex}
@@ -121,11 +121,18 @@ skipabove=\baselineskip,ntheorem
 \newcommand{\setofstatesname}{S}
 \newcommand{\startstatename}{s_0}
 \newcommand{\acceptstatesname}{A}
+\newcommand{\tmacceptstatename}{s_{accept}}
+\newcommand{\tmrejectstatename}{s_{reject}}
+
 \newcommand{\transitionfunctionname}{\delta}
 \newcommand{\inputalphabetname}{\Sigma}
 \newcommand{\stackalphabetname}{\Gamma}
 \newcommand{\tapealphabetname}{\Gamma}
 \newcommand{\blanksymbol}{\sqcup}
+
+\newcommand{\dfatuple}{(\setofstatesname, \inputalphabetname, \transitionfunctionname, \startstatename, \acceptstatesname)}
+\newcommand{\nfatuple}{\dfatuple}
+\newcommand{\tmtuple}{(\setofstatesname, \inputalphabetname, \tapealphabetname, \transitionfunctionname, \startstatename, \acceptstatesname)}
 
 \newcommand{\Pcomplexity}{\textsf{P}}
 \newcommand{\NP}{\textsf{NP}}
@@ -211,18 +218,19 @@ skipabove=\baselineskip,ntheorem
 %\input{content/recursive_defs}
 %\input{content/structural_induction}
 \part{Regular Languages}
-\input{content/dfa}
-\input{content/dfa_minimization}
+%\input{content/dfa}
+%\input{content/dfa_minimization}
+%
+%\input{content/nonregular_myhillnerode}
+%\input{content/nonregular_pumpinglemma}
+%
 %\input{content/reg_closure_ops}
 \input{content/nfa}
 \input{content/powerset}
 
+\input{content/regex}
+\input{content/ardens_lemma}
 
-%\input{content/nonregular_myhillnerode}
-\input{content/nonregular_pumpinglemma}
-%%\input{content/regex}
-%%\input{content/ardens_lemma}
-%
 \part{Context-Free Languages}
 %\input{content/recursive_automata}
 %\input{content/dpda}

@@ -5,17 +5,39 @@
 \section{Definitions}
 
 \begin{definition}
-	A \textit{regular expression $R$ over alphabet $\Sigma$} is defined as being one of the following:
+	A \textit{regular expression $R$ over alphabet $\Sigma$}, along with its language $L(R)$, is defined as being one of the following:
 	\begin{enumerate}
-		\item $\emptyset$ 
-		\item $\emptystring$
-		\item $a$ (where $a \in \Sigma$)
-		\item $R_1 \cup R_2$ (where $R_1, R_2$ are regular expressions over $\Sigma$)
-		\item $R_1 \concat R_2$ (where $R_1, R_2$ are regular expressions over $\Sigma$)
-		\item $R_1^\star$ (where $R_1$ is a regular expression over $\Sigma$)
+		\item $\emptyset$; $L(R) = \emptyset$.
+		\item $\emptystring$; $L(R) = \{\emptystring\}$.
+		\item $a$ (where $a \in \Sigma$); $L(R) = \{a\}$.
+		\item $R_1 \cup R_2$ (where $R_1, R_2$ are regular expressions over $\Sigma$); $L(R) = L(R_1) \cup L(R_2)$.
+		\item $R_1 \concat R_2$ (where $R_1, R_2$ are regular expressions over $\Sigma$); $L(R) = L(R_1) L(R_2)$.
+		\item $R_1^\star$ (where $R_1$ is a regular expression over $\Sigma$); $L(R) = (L(R_1))^\star$.
 	\end{enumerate}
+
 \end{definition}
 
+
 \section{Examples}
+
+A regex for all strings over $\{0,1\}^\star$ that do not contain a 010:
+\[
+	\emptystring \union 0 \union 1 \union 00 \union 01 \union 10 \union 11 \union 000 \union 001 \union 011 \union 100 \union 101 \union 110 \union 111 \union \Sigma\Sigma\Sigma\Sigma\Sigma^\star,
+\]
+where $\Sigma = (0 \union 1)$.
+The advantage of this regex is that it is clear: generate all strings of length 0, then 1, then 2, all strings of length 3 except 010, and all strings of length at least 4.
+However, this is not at all compact; let's try again.
+
+Note that if we haven't read anything related to a 010, and see a 1, then nothing has changed. 
+\todo{Make this more visual.}
+But if we see a 0, then we must not see a 10 immediately after. 
+%However, seeing a 1 after that first 0 is not a red herring, because the string can end or we can generate a 1, after which we are ``home free."
+
+\todo{Fix this regex}
+Here is a more compact regex for the same language:
+\[
+	 0^\star \union 0^\star 1^\star (1 \union 011)^\star
+\]
+
 
 \section{Problems}
