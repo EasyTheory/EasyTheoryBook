@@ -20,6 +20,10 @@
 %\usepackage[bb=boondox,scr=boondoxupr]{mathalpha}
 %\DeclareSymbolFont{zeussymbols}{U}{zeus}{m}{n}
 %\DeclareMathAccent{\hat}{\mathalpha}{zeussymbols}{222}%euler hat accent as in eulervm
+
+\usepackage{mathtools,amssymb}
+\usepackage[euler-hat-accent]{eulervm}
+\usepackage[cal=euler,frak=euler,bb=boondox,scr=boondoxupr]{mathalpha}
 \usepackage[type1]{cabin}
 \usepackage[varqu,varl]{inconsolata}
 \usepackage[backend=biber,style=alphabetic]{biblatex}
@@ -37,7 +41,6 @@
   }%
 }
 \makeatother%
-\usepackage{mathtools}
 \usepackage{geometry}
 \usepackage{algorithmicx}
 \usepackage[ruled]{algorithm}
@@ -63,12 +66,65 @@
 
 % this is for CFGs
 \usepackage{listings}
-\lstset{
-	basicstyle=\itshape,
-	literate={->}{\rightarrow}{1}
-	{=>}{\Rightarrow}{1}
+\lstset{columns=fullflexible,
+  mathescape=true,
+  xleftmargin=.25\textwidth,
+  literate={->}{\ensuremath{\rightarrow{}}}{1}
+  {=>}{\ensuremath{\mskip\medmuskip\Rightarrow{}}}{1}
+  {|}{\ensuremath{\mathbin{}\mskip\medmuskip\vert\mskip\medmuskip}}{1}
+  {a}{\ensuremath{a}}{1}
+  {b}{\ensuremath{b}}{1}
+  {c}{\ensuremath{c}}{1}
+  {d}{\ensuremath{d}}{1}
+  {e}{\ensuremath{e}}{1}
+  {f}{\ensuremath{f}}{1}
+  {g}{\ensuremath{g}}{1}
+  {h}{\ensuremath{h}}{1}
+  {i}{\ensuremath{i}}{1}
+  {j}{\ensuremath{j}}{1}
+  {k}{\ensuremath{k}}{1}
+  {l}{\ensuremath{l}}{1}
+  {m}{\ensuremath{m}}{1}
+  {n}{\ensuremath{n}}{1}
+  {o}{\ensuremath{o}}{1}
+  {p}{\ensuremath{p}}{1}
+  {q}{\ensuremath{q}}{1}
+  {r}{\ensuremath{r}}{1}
+  {s}{\ensuremath{s}}{1}
+  {t}{\ensuremath{t}}{1}
+  {u}{\ensuremath{u}}{1}
+  {v}{\ensuremath{v}}{1}
+  {w}{\ensuremath{w}}{1}
+  {x}{\ensuremath{x}}{1}
+  {y}{\ensuremath{y}}{1}
+  {z}{\ensuremath{z}}{1}
+  {A}{\ensuremath{A}}{1}
+  {B}{\ensuremath{B}}{1}
+  {C}{\ensuremath{C}}{1}
+  {D}{\ensuremath{D}}{1}
+  {E}{\ensuremath{E}}{1}
+  {F}{\ensuremath{F}}{1}
+  {G}{\ensuremath{G}}{1}
+  {H}{\ensuremath{H}}{1}
+  {I}{\ensuremath{I}}{1}
+  {J}{\ensuremath{J}}{1}
+  {K}{\ensuremath{K}}{1}
+  {L}{\ensuremath{L}}{1}
+  {M}{\ensuremath{M}}{1}
+  {N}{\ensuremath{N}}{1}
+  {O}{\ensuremath{O}}{1}
+  {P}{\ensuremath{P}}{1}
+  {Q}{\ensuremath{Q}}{1}
+  {R}{\ensuremath{R}}{1}
+  {S}{\ensuremath{S}}{1}
+  {T}{\ensuremath{T}}{1}
+  {U}{\ensuremath{U}}{1}
+  {V}{\ensuremath{V}}{1}
+  {W}{\ensuremath{W}}{1}
+  {X}{\ensuremath{X}}{1}
+  {Y}{\ensuremath{Y}}{1}
+  {Z}{\ensuremath{Z}}{1}
 }
-
 \theoremstyle{plain}
 
 \usepackage{mdframed} % for boxing thingys
@@ -176,7 +232,7 @@ skipabove=\baselineskip,ntheorem
 }
 {%style after the chapter's ToC
 \noindent\hrulefill% Trace the line below ToC
-\par\nobreak\addvspace{\aftersecskip}% Add spaces if needed
+\par\nobreak\addvspace{\midchapskip}% Add spaces if needed
 \afhead% Warn TeX engine we are after a heading (without effect if ToC empty, duplicate)
 \microtypesetup{protrusion=false}% Re-enable microtype
 }

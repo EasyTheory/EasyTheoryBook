@@ -33,11 +33,11 @@ A \emph{context-free grammar} (CFG) consists of the following four parts:
 In effect, each rule corresponds to a single variable on the left side, and any combination of variables and terminals, of any length, on the right side.
 
 A \emph{derivation of $x$} is a finite sequence of rule applications
-\begin{lstlisting}[mathescape]
-	$S => \alpha_1 => \cdots => \alpha_n => x$,
+\begin{lstlisting}
+	 S => $\alpha_1$ => $\cdots$ => $\alpha_n$ => $x$,
 \end{lstlisting}
 where $x \in \Sigma^\star$ (i.e., only consists of terminals).
-We denote this as $S \Rightarrow^\star x$.
+We denote this as $S \xRightarrow{\star}x$.
 A derivation is \emph{leftmost} if the rule application from $\alpha_i \Rightarrow \alpha_{i+1}$ is applied to the ``left most'' variable in $\alpha_i$.
 
 The \emph{language of a CFG $G$} is the set of all strings $x \in \Sigma^\star$ such that $S \Rightarrow^\star x$.
@@ -49,14 +49,14 @@ A CFG $G$ is \emph{ambiguous} if there exists a string $x \in \Sigma^\star$ such
 In other words, the string $x$ can be parsed in multiple ways. 
 
 For example, consider the following CFG:
-\begin{lstlisting}[mathescape]
-	$S -> a|Sa|bSS|SSb|SbS$
+\begin{lstlisting}
+	  S  -> a | Sa | bSS | SSb | SbS
 \end{lstlisting}
 
 This grammar is ambiguous because the string $baa$ can be derived in two ways:
-\begin{lstlisting}[mathescape]
-	$S => bSS => baS => baa$
-	$S => bSS => bSa => baa$
+\begin{lstlisting}
+	 S => bSS => baS => baa
+	 S => bSS => bSa => baa
 \end{lstlisting}
 
 \section{Examples}
