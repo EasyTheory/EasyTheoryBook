@@ -1,4 +1,5 @@
 \documentclass[12pt,american,final, a4paper]{memoir}
+\usepackage[T1]{fontenc}
 \usepackage{csquotes}
 \usepackage{babel}
 \usepackage{enumitem}
@@ -10,22 +11,21 @@
 \makeatother
 \usepackage{etoc}
 \usepackage{float}
-\usepackage[T1]{fontenc}
-\usepackage[babel,final,tracking=true,kerning=true,spacing=true,activate={true,nocompatibility}]{microtype}
+\usepackage[babel,final,tracking=true,kerning=true,verbose=silent,spacing=true,activate={true,nocompatibility}]{microtype}
 \usepackage{graphicx}
 \usepackage[all]{nowidow}  % avoids widow lines at all costs
 \doublehyphendemerits=100000 % and hyphens on successive lines
-\usepackage{newpxtext,textcomp}
-\usepackage{eulerpx}
+\usepackage{textcomp}
+\usepackage{newpxtext}
+%usepackage{eulerpx}
 %\usepackage[bb=boondox,scr=boondoxupr]{mathalpha}
 %\DeclareSymbolFont{zeussymbols}{U}{zeus}{m}{n}
 %\DeclareMathAccent{\hat}{\mathalpha}{zeussymbols}{222}%euler hat accent as in eulervm
-
 \usepackage{mathtools,amssymb}
-\usepackage[euler-hat-accent]{eulervm}
-%\usepackage[cal=euler,frak=euler,bb=boondox,scr=boondoxupr]{mathalpha}
+\usepackage[euler-hat-accent,euler-digits]{eulervm}
+\usepackage[cal=euler,frak=euler,bb=boondox,scr=boondoxupr]{mathalpha}
 \usepackage[type1]{cabin}
-\usepackage[varqu,varl]{inconsolata}
+%usepackage[varqu,varl]{inconsolata}
 \usepackage[backend=biber,style=alphabetic]{biblatex}
 \addbibresource{sample.bib}
 \usepackage[hypcap=true]{caption} % Anchors links to the beginning of their respective floats. Load after hyperref.
@@ -126,8 +126,7 @@
   {Z}{\ensuremath{Z}}{1}
 }
 \theoremstyle{plain}
-
-\usepackage{mdframed} % for boxing thingys
+\usepackage{mdframed} % for boxing things
 \newmdtheoremenv[
 outerlinewidth=2,leftmargin=40,%
 rightmargin=40,backgroundcolor=yellow,%
